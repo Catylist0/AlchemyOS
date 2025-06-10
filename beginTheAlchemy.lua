@@ -1,10 +1,10 @@
 local title = [[
     _    _      _                          TM
-   / \  | | ___| |__   ___ _ __ ___  _   _ 
+   / \  | | ___| |__   ___ _ __ ___  _   _
   / _ \ | |/ __| '_ \ / _ \ '_ ` _ \| | | |
  / ___ \| | (__| | | |  __/ | | | | | |_| |
 /_/   \_\_|\___|_| |_|\___|_| |_| |_|\__, |
-                                     |___/ 
+                                     |___/
 A ComputerCraft Operating System.
 
 By Cauldron Microsystems:
@@ -22,7 +22,7 @@ end
 -- Better pseudo-entropy without HTTP
 local t = os.time()
 local c = os.clock()
-local seed = math.floor((t * 1000) + (c * 100000)) % 2^31
+local seed = math.floor((t * 1000) + (c * 100000)) % 2 ^ 31
 math.randomseed(seed)
 
 -- Optional: warm it up
@@ -46,6 +46,26 @@ function log(msg)
     end
 end
 
+-- Recursively get total size (in bytes) of a directory
+local function getDirSize(path)
+    local total = 0
+    for _, name in ipairs(fs.list(path)) do
+        local fullPath = fs.combine(path, name)
+        if fs.isDir(fullPath) then
+            total = total + getDirSize(fullPath)
+        else
+            total = total + fs.getSize(fullPath)
+        end
+    end
+    return total
+end
+
+-- Returns size of "/" in kilobytes
+local function getRootSizeKB()
+    local bytes = getDirSize("/")
+    return math.floor(bytes / 1024)
+end
+
 local function startSession()
     if not fs.isDir("logs") then
         fs.makeDir("logs")
@@ -55,7 +75,7 @@ local function startSession()
     f.close()
     log("Session started: " .. SessionID)
     local freeSpaceKB = math.floor(fs.getFreeSpace("/") / 1024)
-    local osSizeKB = math.floor(fs.getSize("/") / 1024)
+    local osSizeKB = getRootSizeKB()
     local percentOfTotalSpaceFree = math.floor((freeSpaceKB / osSizeKB) * 100)
     log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentOfTotalSpaceFree .. "% of total used)")
     log("ALchemy Size: " .. osSizeKB .. " KB")
@@ -107,9 +127,9 @@ local function enterAlchemy()
     hang(0, "ending")
 end
 
-local repo     = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
-local idFile   = "recipe.lua"
-local tmpFile  = "__ids.lua"
+local repo    = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
+local idFile  = "recipe.lua"
+local tmpFile = "__ids.lua"
 
 -- Helper: create nested directories
 local function ensureDir(path)
@@ -137,7 +157,7 @@ if not existingRecipe.version then
     log("No current recipe version found, defaulting to 0.0.0")
 end
 
-Version = currentVersion  -- Set global Version variable
+Version = currentVersion -- Set global Version variable
 
 if not http then
     log("HTTP API is disabled")
@@ -150,7 +170,7 @@ local f   = fs.open(tmpFile, "w")
 f.write(res.readAll()); f.close(); res.close()
 
 local ok, launchRecipe = pcall(dofile, tmpFile)
-fs.delete(tmpFile)  -- always clean up
+fs.delete(tmpFile) -- always clean up
 
 if not ok then
     error("Failed to parse " .. tmpFile)
@@ -197,7 +217,7 @@ if shouldUpdate or isDevVersion then
 end
 
 currentVersion = latestVersion
-Version = currentVersion  -- Update global Version variable just in case
+Version = currentVersion -- Update global Version variable just in case
 
 log("New Version: " .. tostring(currentVersion))
 
