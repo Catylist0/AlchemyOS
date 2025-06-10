@@ -54,7 +54,9 @@ local function startSession()
     local f = fs.open(logFile, "w")
     f.close()
     log("Session started: " .. SessionID)
-    log("Disk Space remaining: " .. fs.getFreeSpace("/") .. " bytes")
+    local freeSpaceKB = math.floor(fs.getFreeSpace("/") / 1024)
+    local percentOfTotalSpaceFree = math.floor((freeSpaceKB / (fs.getSize("/") / 1024)) * 100)
+    log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentOfTotalSpaceFree .. "% of total used)")
     log("Current Logs:")
     local logFiles = fs.list("logs")
     for _, file in ipairs(logFiles) do
@@ -88,6 +90,7 @@ end
 startSession()
 local barEq = string.rep("=", consoleWidth)
 if DevMode then
+    sleep(1)
     print(barEq)
     log(title)
     print(barEq)
