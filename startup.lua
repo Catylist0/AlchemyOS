@@ -1,6 +1,6 @@
 term.clear()
-term.setCursorBlink(false)
 term.setCursorPos(1, 1)
+term.setCursorBlink(false)
 
 DevMode = true -- Set to true to enable developer mode features
 
@@ -48,6 +48,19 @@ local chunk, loadErr = loadfile(OsDirectory .. "/beginTheAlchemy.lua")
 if not chunk then
     hang(1, "Startup Error loading beginTheAlchemy.lua: "..tostring(loadErr))
 end
+
+-- remove any file from the root that is present in the OsDirectory
+local function purgeFalseCatalystFiles()
+    local files = fs.list("/")
+    for _, file in ipairs(files) do
+        if fs.exists(fs.combine(OsDirectory, file)) then
+            fs.delete(file)
+            log("Purged false catalyst file: " .. file)
+        end
+    end
+end
+
+purgeFalseCatalystFiles()
 
 -- Lua 5.1: copy our environment (_G) into the chunk
 setfenv(chunk, getfenv())
