@@ -149,12 +149,18 @@ startSession()
 local barEq = string.rep("=", consoleWidth)
 if DevMode then
     sleep(1)
+    if #Monitors > 0 then
+        term.redirect(Monitors[1])
+    end
     term.clear()
     term.setCursorPos(1, 2)
     print(barEq)
     log(title)
     print(barEq)
     sleep(1)
+    if #Monitors > 0 then
+        term.redirect(Monitors[1])
+    end
     term.clear()
     term.setCursorPos(1, 1)
 else

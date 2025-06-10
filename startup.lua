@@ -2,11 +2,7 @@ term.clear()
 term.setCursorPos(1, 1)
 term.setCursorBlink(false)
 
-local monitors = { peripheral.find("monitor") }
-
-if #monitors > 0 then
-    term.redirect(monitors[1])
-end
+Monitors = { peripheral.find("monitor") }
 
 DevMode = true -- Set to true to enable developer mode features
 
