@@ -156,8 +156,8 @@ if isDevVersion then
     log("Warning: This is a development version - pulling updates...")
 end
 
--- Download updates
-if shouldUpdate or isDevVersion then
+local function pullAlchemyUpdates()
+    log("pulling updates...")
     for _, path in ipairs(files) do
         log("Fetching " .. path)
         local r = http.get(repo .. path)
@@ -172,6 +172,11 @@ if shouldUpdate or isDevVersion then
             log("Failed: " .. path)
         end
     end
+end
+
+-- Download updates
+if shouldUpdate or isDevVersion then
+    pullAlchemyUpdates()
 end
 
 currentVersion = latestVersion
