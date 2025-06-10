@@ -24,7 +24,7 @@ local currentVersion = existingRecipe.currentVersion or "0.0.0"
 local shouldUpdate = false
 if currentVerison ~= latestVersion then shouldUpdate = true end
 
-
+print("New Version Detected: " .. shouldUpdate)
 -- Download each file (rate-limited)
 if shouldUpdate then
     for _, path in ipairs(files) do
