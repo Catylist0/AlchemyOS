@@ -29,3 +29,5 @@ for _, path in ipairs(files) do
 end
 
 print("Done.")
+sleep(3)
+error("end")
