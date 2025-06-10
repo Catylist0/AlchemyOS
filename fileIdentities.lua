@@ -1,1 +1,5 @@
-return nil
+return {
+    "startup.lua",
+    "osExecute.lua",
+    "fileIdentities.lua"
+}

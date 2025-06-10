@@ -1,0 +1,6 @@
+{
+    "Lua.addonManager.enable": false,
+    "Lua.diagnostics.disable": [
+        "deprecated"
+    ]
+}
