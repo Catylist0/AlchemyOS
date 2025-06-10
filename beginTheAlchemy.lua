@@ -46,10 +46,11 @@ function log(msg)
     end
 end
 
+local filesCounted = 0
+
 -- Recursively get total size (in bytes) of a directory
 local function getDirSize(path)
     local total = 0
-    local filesCounted = 0
     for _, name in ipairs(fs.list(path)) do
         local full = fs.combine(path, name)
         if fs.isDir(full) then
@@ -60,12 +61,12 @@ local function getDirSize(path)
             filesCounted = filesCounted + 1
         end
     end
-    print("Total size of " .. path .. ": " .. total .. " bytes " .. "(" .. filesCounted .. " files)")
     return total
 end
 
 -- Returns size of "/" in kilobytes, skipping /rom
 local function getRootSizeKB()
+    filesCounted = 0
     local totalBytes = 0
     for _, name in ipairs(fs.list("/")) do
         if name ~= "rom" then
@@ -74,9 +75,12 @@ local function getRootSizeKB()
                 totalBytes = totalBytes + getDirSize(full)
             else
                 totalBytes = totalBytes + fs.getSize(full)
+                print("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+                filesCounted = filesCounted + 1
             end
         end
     end
+    print("Total size of Root: " .. totalBytes .. " bytes " .. "(" .. filesCounted .. " files)")
     return math.floor(totalBytes / 1024)
 end
 
