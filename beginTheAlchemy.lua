@@ -16,7 +16,7 @@ if DevMode then
 end
 
 if DevMode == nil then
-    error("SystemVar 'DevMode' is not set or accessible.")
+    hang(2, "SystemVar 'DevMode' is not set or accessible.")
 end
 
 math.randomseed(os.clock() * 100000)
@@ -35,7 +35,7 @@ function log(msg)
         if DevMode then print(msg) end
         f.close()
     else
-        hang(4, "Failed to open log file: " .. logFile)
+        hang(3, "Failed to open log file: " .. logFile)
     end
 end
 

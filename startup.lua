@@ -32,5 +32,5 @@ end
 local ok, err = pcall(dofile, "/beginTheAlchemy.lua")
 if not ok then
     local msg = (type(err) == "string") and err or tostring(err)
-    hang(3, "Startup Error: " .. msg)
+    hang(1, "Startup Error: " .. msg)
 end
