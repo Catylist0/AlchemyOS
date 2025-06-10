@@ -22,6 +22,7 @@ function hang(code, optionalErrText)
     local formattedCode = string.format("%03d", code)
     if hangingToTop then
         print("SubError of: ")
+        error("DousingUp")
     end
     while true do
         local _, c = os.pullEvent("char")
@@ -39,8 +40,10 @@ function hang(code, optionalErrText)
     end
 end
 
+local OsDirectory = "SystemCatalyst"
+
 -- Load and run the main initialization script in our own globals
-local chunk, loadErr = loadfile("/beginTheAlchemy.lua")
+local chunk, loadErr = loadfile(OsDirectory .. "/beginTheAlchemy.lua")
 if not chunk then
     hang(1, "Startup Error loading beginTheAlchemy.lua: "..tostring(loadErr))
 end
