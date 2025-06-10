@@ -79,11 +79,6 @@ local repo     = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
 local idFile   = "recipe.lua"
 local tmpFile  = "__ids.lua"
 
-if not http then
-    log("HTTP API is disabled")
-    return enterAlchemy()
-end
-
 -- Helper: create nested directories
 local function ensureDir(path)
     local cur = ""
@@ -92,6 +87,27 @@ local function ensureDir(path)
         if not fs.isDir(cur) then fs.makeDir(cur) end
         cur = cur .. "/"
     end
+end
+
+-- Load existing recipe if available
+local existingRecipe = {}
+if fs.exists("/recipe.lua") then
+    local success, tbl = pcall(dofile, "/recipe.lua")
+    if success and type(tbl) == "table" then
+        existingRecipe = tbl
+    else
+        log("Failed to load existing recipe, defaulting to empty")
+    end
+end
+
+local currentVersion = existingRecipe.version or "0.0.0"
+if not existingRecipe.version then
+    log("No current recipe version found, defaulting to 0.0.0")
+end
+
+if not http then
+    log("HTTP API is disabled")
+    return enterAlchemy()
 end
 
 -- Fetch and parse remote recipe safely
@@ -110,22 +126,6 @@ local files         = launchRecipe.fileIdentities or error("No file identities f
 local latestVersion = launchRecipe.version or error("No version found")
 
 if type(files) ~= "table" then error("Invalid file list") end
-
--- Load existing recipe if available
-local existingRecipe = {}
-if fs.exists("/recipe.lua") then
-    local success, tbl = pcall(dofile, "/recipe.lua")
-    if success and type(tbl) == "table" then
-        existingRecipe = tbl
-    else
-        log("Failed to load existing recipe, defaulting to empty")
-    end
-end
-
-local currentVersion = existingRecipe.version or "0.0.0"
-if not existingRecipe.version then
-    log("No current recipe version found, defaulting to 0.0.0")
-end
 
 log("Local Version: " .. currentVersion)
 

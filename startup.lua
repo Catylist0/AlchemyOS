@@ -4,6 +4,8 @@ term.setCursorPos(1, 1)
 
 DevMode = true
 
+Version = "not loaded yet..."
+
 os.pullEvent = os.pullEventRaw
 
 function hang(code, optionalErrText)
@@ -23,6 +25,7 @@ function hang(code, optionalErrText)
             i = 1
         end
         if i > #s and DevMode then
+            print("Version: " .. tostring(Version))
             return error("Dousing Alchemy: " .. tostring(optionalErrText))
         end
     end
