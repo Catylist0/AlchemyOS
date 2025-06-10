@@ -4,7 +4,7 @@ term.setCursorBlink(false)
 
 Monitors = { peripheral.find("monitor") }
 
-DevMode = true -- Set to true to enable developer mode features
+DevMode = false -- Set to true to enable developer mode features
 
 if DevMode then
     print("Starting AlchemyOS Dev Environment...")

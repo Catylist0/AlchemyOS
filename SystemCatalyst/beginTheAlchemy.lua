@@ -177,6 +177,7 @@ log("Beginning Alchemy...")
 local function enterAlchemy()
     clearLogFolder()
     sleep(3)
+    print("Success")
     hang(0, "ending")
 end
 
