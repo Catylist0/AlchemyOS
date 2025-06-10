@@ -4,8 +4,7 @@ ingredients.fileIdentities = {
     "startup.lua",
     "beginTheAlchemy.lua",
     "recipe.lua",
-    "program.lua",
-    "logs"
+    "program.lua"
 }
 
 ingredients.version = "0.0.4d"
