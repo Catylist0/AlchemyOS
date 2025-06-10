@@ -73,7 +73,7 @@ log("Beginning Alchemy...")
 
 local function enterAlchemy()
     sleep(3)
-    error("end")
+    hang(0, "ending")
 end
 
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
