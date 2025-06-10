@@ -4,6 +4,10 @@ term.setCursorPos(1, 1)
 
 DevMode = true
 
+if DevMode then
+    print("Starting AlchemyOS Dev Environment...")
+end
+
 Version = "not loaded yet..."
 
 os.pullEvent = os.pullEventRaw

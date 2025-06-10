@@ -13,10 +13,6 @@ Subsidiary of Catylist Electrochemical
 All rights reserved.
 ]]
 
-if DevMode then
-    print("Starting AlchemyOS Dev Environment...")
-end
-
 if DevMode == nil then
     hang(3, "SystemVar 'DevMode' is not set or accessible.")
 end
