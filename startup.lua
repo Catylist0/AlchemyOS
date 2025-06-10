@@ -35,6 +35,7 @@ function hang(code, optionalErrText)
         end
         if ((i > #s) or hangingToTop) and DevMode then
             print("Version: " .. tostring(Version))
+            hangingToTop = true
             error("Dousing Alchemy: " .. tostring(optionalErrText))
         end
     end

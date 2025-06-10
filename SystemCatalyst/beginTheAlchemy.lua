@@ -156,7 +156,6 @@ if DevMode then
     log(title)
     print(barEq)
     print([[
-        
     ]])
     sleep(1)
 else
