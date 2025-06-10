@@ -13,6 +13,8 @@ Subsidiary of Catylist Electrochemical
 All rights reserved.
 ]]
 
+local consoleWidth, consoleHeight = term.getSize()
+
 if DevMode == nil then
     hang(3, "SystemVar 'DevMode' is not set or accessible.")
 end
@@ -72,7 +74,14 @@ function printLogs()
 end
 
 startSession()
-log(title)
+local barEq = string.rep("=", consoleWidth)
+if DevMode then
+    print(barEq)
+    log(title)
+    print(barEq)
+else
+    log(title)
+end
 log("Beginning Alchemy...")
 
 local function enterAlchemy()
