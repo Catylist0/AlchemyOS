@@ -150,12 +150,13 @@ local barEq = string.rep("=", consoleWidth)
 if DevMode then
     sleep(1)
     term.clear()
-    print()
+    term.setCursorPos(1, 2)
     print(barEq)
     log(title)
     print(barEq)
     sleep(1)
     term.clear()
+    term.setCursorPos(1, 1)
 else
     log(title)
 end
