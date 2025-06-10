@@ -1,3 +1,5 @@
+print("Beginning Alchemy...")
+
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
 local idFile = "recipe.lua"
 local downloadLimit = 10
@@ -22,11 +24,13 @@ local existingRecipe = fs.open("/recipe.lua", "r") or launchRecipe
 local currentVersion = existingRecipe.currentVersion
 if not currentVersion then 
     currentVersion = "0.0.0"
-    print("Error, no saved current version")
+    print("Error, no saved current version, falling back to 0.0.0")
 end
 
 local shouldUpdate = false
 if currentVersion ~= latestVersion then shouldUpdate = true end
+
+print("Local Version: " .. tostring(currentVersion))
 
 print("New Version Detected: " .. tostring(shouldUpdate))
 -- Download each file (rate-limited)
