@@ -5,8 +5,8 @@ term.setCursorBlink(false)
 local monitors = { peripheral.find("monitor") }
 
 if #monitors > 0 then
-    print(monitor[1])
-    term.redirect(peripheral.wrap(monitor[1]))
+    print(monitors[1])
+    term.redirect(peripheral.wrap(monitors[1]))
 end
 
 DevMode = true -- Set to true to enable developer mode features
