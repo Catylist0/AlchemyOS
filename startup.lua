@@ -12,13 +12,17 @@ Version = "not loaded yet..."
 
 os.pullEvent = os.pullEventRaw
 
+local hangingToTop = false
+
 function hang(code, optionalErrText)
     if not optionalErrText then
         optionalErrText = "generic"
     end
     local s = "douse" i = 1
     local formattedCode = string.format("%03d", code)
-    print("Error Code: " .. formattedCode)
+    if hangingToTop then
+        print("SubError of: ")
+    end
     while true do
         local _, c = os.pullEvent("char")
         if c == s:sub(i, i) then
@@ -28,9 +32,9 @@ function hang(code, optionalErrText)
         else
             i = 1
         end
-        if i > #s and DevMode then
+        if ((i > #s) or hangingToTop) and DevMode then
             print("Version: " .. tostring(Version))
-            return error("Dousing Alchemy: " .. tostring(optionalErrText))
+            error("Dousing Alchemy: " .. tostring(optionalErrText))
         end
     end
 end
