@@ -9,6 +9,8 @@ A ComputerCraft Operating System.
 
 By Cauldron Microsystems:
 Subsidiary of Catylist Electrochemical
+
+All rights reserved.
 ]]
 
 if DevMode then
@@ -19,10 +21,17 @@ if DevMode == nil then
     hang(3, "SystemVar 'DevMode' is not set or accessible.")
 end
 
-math.randomseed(os.clock() * 100000)
+-- Better pseudo-entropy without HTTP
+local t = os.time()
+local c = os.clock()
+local seed = math.floor((t * 1000) + (c * 100000)) % 2^31
+math.randomseed(seed)
+
+-- Optional: warm it up
+for _ = 1, 3 do math.random() end
 
 local function randomHash()
-    return string.format("%x", math.random(0, 0xFFFFFFFF))
+    return string.format("%08x", math.random(0, 0xFFFFFFFF))
 end
 
 SessionID = randomHash()

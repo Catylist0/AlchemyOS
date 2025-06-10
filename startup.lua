@@ -13,7 +13,7 @@ function hang(code, optionalErrText)
         optionalErrText = "generic"
     end
     local s = "douse" i = 1
-    local formattedCode = string.format("%02d", code)
+    local formattedCode = string.format("%03d", code)
     print("Error Code: " .. formattedCode)
     while true do
         local _, c = os.pullEvent("char")
