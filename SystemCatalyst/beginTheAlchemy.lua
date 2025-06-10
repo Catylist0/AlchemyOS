@@ -57,7 +57,7 @@ local function getDirSize(path)
             total = total + getDirSize(full)
         else
             total = total + fs.getSize(full)
-            print("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+            log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
             filesCounted = filesCounted + 1
         end
     end
@@ -75,12 +75,12 @@ local function getRootSizeKB()
                 totalBytes = totalBytes + getDirSize(full)
             else
                 totalBytes = totalBytes + fs.getSize(full)
-                print("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+                log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
                 filesCounted = filesCounted + 1
             end
         end
     end
-    print("Total size of Root: " .. totalBytes .. " bytes " .. "(" .. filesCounted .. " files)")
+    log("Total size of Root: " .. totalBytes .. " bytes " .. "(" .. filesCounted .. " files)")
     return math.floor(totalBytes / 1024)
 end
 
