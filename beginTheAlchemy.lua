@@ -21,7 +21,7 @@ fs.delete(tmp)
 if type(files) ~= "table" then error("Invalid file list") end
 
 local existingRecipe = fs.open("/recipe.lua", "r") or launchRecipe
-local currentVersion = existingRecipe.currentVersion
+local currentVersion = existingRecipe.version
 if not currentVersion then 
     currentVersion = "0.0.0"
     print("Error, no saved current version, falling back to 0.0.0")
