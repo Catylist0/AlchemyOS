@@ -2,6 +2,8 @@ term.clear()
 term.setCursorBlink(false)
 term.setCursorPos(1, 1)
 
+DevMode = true
+
 os.pullEvent = os.pullEventRaw
 
 function hang(startupError, optionalErrText)
@@ -13,7 +15,7 @@ function hang(startupError, optionalErrText)
     while true do
         _,c = os.pullEvent("char")
         i = (c == s:sub(i, i)) and i + 1 or (c == "d" and 2 or 1)
-        if i > #s then return error("Dousing Alchemy: " .. tostring(optionalErrText)) end
+        if i > #s and DevMode then return error("Dousing Alchemy: " .. tostring(optionalErrText)) end
     end
 end
 
