@@ -48,17 +48,21 @@ end
 
 -- Recursively get total size (in bytes) of a directory
 local function getDirSize(path)
-    local total = 0
-    for _, name in ipairs(fs.list(path)) do
-        local fullPath = fs.combine(path, name)
-        if fs.isDir(fullPath) then
-            total = total + getDirSize(fullPath)
-        else
-            total = total + fs.getSize(fullPath)
-            log("Got size for " .. fullPath .. " (" .. fs.getSize(fullPath) .. " bytes)")
-        end
+  -- don’t descend into ROM
+  if path == "/rom" or path:sub(1,5) == "/rom/" then
+    return 0
+  end
+
+  local total = 0
+  for _, name in ipairs(fs.list(path)) do
+    local full = fs.combine(path, name)
+    if fs.isDir(full) then
+      total = total + getDirSize(full)
+    else
+      total = total + fs.getSize(full)
     end
-    return total
+  end
+  return total
 end
 
 -- Returns size of "/" in kilobytes
