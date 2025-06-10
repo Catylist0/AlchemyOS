@@ -26,7 +26,7 @@ end
 local code = file.readAll()
 file.close()
 
-local fn = loadstring(code, "osExecute.lua")
+local fn = loadstring(code, "beginTheAlchemy.lua")
 if not fn then
     hang(2, "failed to load initialization code")
 end
