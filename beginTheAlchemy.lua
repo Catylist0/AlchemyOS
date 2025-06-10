@@ -110,6 +110,23 @@ function printLogs()
     end
 end
 
+local function clearLogFolder()
+    if fs.isDir("logs") then
+        local logFiles = fs.list("logs")
+        for _, file in ipairs(logFiles) do
+            -- exlude current session log
+            if file == SessionID .. ".log" then
+
+            elseif file:match("^[0-9a-f]+%.log$") then
+                fs.delete(fs.combine("logs", file))
+            end
+        end
+        log("All logs cleared.")
+    else
+        log("No logs directory found.")
+    end
+end
+
 startSession()
 local barEq = string.rep("=", consoleWidth)
 if DevMode then
@@ -124,6 +141,7 @@ end
 log("Beginning Alchemy...")
 
 local function enterAlchemy()
+    clearLogFolder()
     sleep(3)
     hang(0, "ending")
 end
