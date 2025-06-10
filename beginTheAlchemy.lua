@@ -79,6 +79,7 @@ if DevMode then
     print(barEq)
     log(title)
     print(barEq)
+    sleep(1)
 else
     log(title)
 end
@@ -146,13 +147,13 @@ if type(files) ~= "table" then error("Invalid file list") end
 log("Local Version: " .. currentVersion)
 
 local shouldUpdate = currentVersion ~= latestVersion
-log("New Version Detected: " .. tostring(shouldUpdate))
+if shouldUpdate then log("New Version Detected: " .. tostring(latestVersion)) end
 
 -- check if the version ends in a lowercase d
 local isDevVersion = latestVersion:sub(-1) == "d"
 
 if isDevVersion then
-    log("Warning: This is a development version")
+    log("Warning: This is a development version - pulling updates...")
 end
 
 -- Download updates
