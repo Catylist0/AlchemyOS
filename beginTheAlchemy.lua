@@ -110,6 +110,8 @@ if not existingRecipe.version then
     log("No current recipe version found, defaulting to 0.0.0")
 end
 
+Version = currentVersion  -- Set global Version variable
+
 if not http then
     log("HTTP API is disabled")
     return enterAlchemy()
@@ -154,5 +156,10 @@ if shouldUpdate then
         end
     end
 end
+
+currentVersion = latestVersion
+Version = currentVersion  -- Update global Version variable just in case
+
+log("New Version: " .. tostring(currentVersion))
 
 enterAlchemy()
