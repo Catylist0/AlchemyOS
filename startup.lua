@@ -28,9 +28,19 @@ function hang(code, optionalErrText)
     end
 end
 
--- Load and run the main initialization script in the current environment
-local ok, err = pcall(dofile, "/beginTheAlchemy.lua")
-if not ok then
-    local msg = (type(err) == "string") and err or tostring(err)
-    hang(1, "Startup Error: " .. msg)
+-- Load and run the main initialization script in our own globals
+local chunk, loadErr = loadfile("/beginTheAlchemy.lua")
+if not chunk then
+    hang(1, "Startup Error loading beginTheAlchemy.lua: "..tostring(loadErr))
 end
+
+-- Lua 5.1: copy our environment (_G) into the chunk
+setfenv(chunk, getfenv())
+
+-- run it
+local ok, runErr = pcall(chunk)
+if not ok then
+    local msg = (type(runErr) == "string") and runErr or tostring(runErr)
+    hang(2, "Startup Error: "..msg)
+end
+
