@@ -2,7 +2,7 @@ local ingredients = {}
 
 ingredients.fileIdentities = {
     "startup.lua",
-    "beginTheAlchemy.lua",
+    "SystemCatalyst/beginTheAlchemy.lua",
     "recipe.lua",
     "program.lua"
 }
