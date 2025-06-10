@@ -8,6 +8,6 @@ ingredients.fileIdentities = {
     "logs"
 }
 
-ingredients.version = "0.0.2d"
+ingredients.version = "0.0.3d"
 
 return ingredients

@@ -6,7 +6,12 @@ local title = [[
 /_/   \_\_|\___|_| |_|\___|_| |_| |_|\__, |
                                      |___/ 
 A ComputerCraft Operating System.
+
+By Cauldron Microsystems:
+Subsidiary of Catylist Electrochemical
 ]]
+
+if DevMode then print("Starting AlchemyOS Dev Environment...") end
 
 math.randomseed(os.clock() * 100000)
 
@@ -21,7 +26,10 @@ function log(msg)
     local logFile = "logs/" .. SessionID .. ".log"
     local f = fs.open(logFile, "a")
     if f then
-        f.writeLine(os.date("%Y-%m-%d %H:%M:%S") .. " - " .. msg)
+        f.writeLine(textutils.formatTime(os.time(), true) .. " - " .. msg)
+        if DevMode then
+            print(msg)  -- also print to console if in dev mode
+        end
         f.close()
     else
         hang(4, "Failed to open log file: " .. logFile)
@@ -63,9 +71,19 @@ log(title)
 
 log("Beginning Alchemy...")
 
+local function enterAlchemy()
+    sleep(3)
+    error("end")
+end
+
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
 local idFile = "recipe.lua"
 local tmpFile = "__ids.lua"
+
+if not http then
+    log("HTTP API is disabled")
+    enterAlchemy()
+end
 
 -- Fetch remote recipe
 local res = http.get(repo .. idFile) or error("Failed to fetch " .. idFile)
@@ -113,5 +131,4 @@ if shouldUpdate then
     end
 end
 
-sleep(3)
-error("end")
+enterAlchemy()
