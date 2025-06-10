@@ -148,12 +148,12 @@ end
 startSession()
 local barEq = string.rep("=", consoleWidth)
 if DevMode then
-    sleep(1)
     log(#Monitors)
     if #Monitors > 0 then
         log("Redirecting to monitor: " .. tostring(Monitors[1]))
         term.redirect(Monitors[1])
     end
+    sleep(1)
     term.clear()
     term.setCursorPos(1, 2)
     print(barEq)
