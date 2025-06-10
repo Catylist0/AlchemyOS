@@ -55,7 +55,7 @@ local function purgeFalseCatalystFiles()
     for _, file in ipairs(files) do
         if fs.exists(fs.combine(OsDirectory, file)) then
             fs.delete(file)
-            log("Purged false catalyst file: " .. file)
+            if DevMode then print("Warning Purged false catalyst file: " .. file) end
         end
     end
 end
