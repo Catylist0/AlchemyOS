@@ -1,5 +1,5 @@
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
-local idFile = "fileIdentities.lua"
+local idFile = "recipe.lua"
 local downloadLimit = 10
 local downloadCount = 0
 
