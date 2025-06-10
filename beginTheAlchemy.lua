@@ -55,6 +55,7 @@ local function getDirSize(path)
             total = total + getDirSize(fullPath)
         else
             total = total + fs.getSize(fullPath)
+            log("Got size for " .. fullPath .. " (" .. fs.getSize(fullPath) .. " bytes)")
         end
     end
     return total
