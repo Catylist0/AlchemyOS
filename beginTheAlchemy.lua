@@ -23,7 +23,7 @@ local currentVersion = existingRecipe.version
 if not existingRecipe then
     print("Recipe load fail")
 end
-print("Debug: Type of existingRecipe: " .. type(existingRecipe))
+--print("Debug: Type of existingRecipe: " .. type(existingRecipe))
 if not currentVersion then 
     currentVersion = "0.0.0"
     print("Error, no current recipe version, falling back to 0.0.0")
