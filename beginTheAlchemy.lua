@@ -165,7 +165,7 @@ if shouldUpdate then log("New Version Detected: " .. tostring(latestVersion)) en
 local isDevVersion = latestVersion:sub(-1) == "d"
 
 if isDevVersion then
-    log("Warning: This is a development version - pulling updates...")
+    log("Warning: This is a development version")
 end
 
 local function pullAlchemyUpdates()
