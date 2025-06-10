@@ -162,7 +162,8 @@ if DevMode then
     log(title)
     print(barEq)
     if #Monitors > 0 then
-        term.redirect()
+        term.redirect(term.native())
+        term.setCursorPos(1, 1)
         log("Redirected back to terminal.")
     end
     sleep(1)
