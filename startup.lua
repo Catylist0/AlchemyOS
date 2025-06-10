@@ -2,7 +2,7 @@ term.clear()
 term.setCursorBlink(false)
 term.setCursorPos(1, 1)
 
-DevMode = true
+DevMode = false -- Set to true to enable developer mode features
 
 if DevMode then
     print("Starting AlchemyOS Dev Environment...")
