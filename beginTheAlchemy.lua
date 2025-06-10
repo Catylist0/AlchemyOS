@@ -54,6 +54,18 @@ local function startSession()
     local f = fs.open(logFile, "w")
     f.close()
     log("Session started: " .. SessionID)
+    log("Disk Space remaining: " .. fs.getFreeSpace("/") .. " bytes")
+    log("Current Logs:")
+    local logFiles = fs.list("logs")
+    for _, file in ipairs(logFiles) do
+        if file:match("^%d+%.log$") then
+            if file == SessionID .. ".log" then
+                log(" - " .. file .. " (current session)")
+            else
+                log(" - " .. file)
+            end
+        end
+    end
 end
 
 function printLogs()
