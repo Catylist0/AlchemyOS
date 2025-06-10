@@ -156,7 +156,7 @@ if DevMode then
     end
     sleep(1)
     term.clear()
-    term.setCursorPos(1, (consoleHeight/2) - 3)
+    term.setCursorPos(1, (consoleHeight/2) - 6)
     local barEq = string.rep("=", consoleWidth)
     print(barEq)
     log(title)
