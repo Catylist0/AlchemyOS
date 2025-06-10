@@ -78,7 +78,7 @@ local function startSession()
     local osSizeKB = getRootSizeKB()
     local totalKB = freeSpaceKB + osSizeKB
     local percentFree = math.floor(freeSpaceKB / totalKB * 100)
-    log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentFree .. "% of total used)")
+    log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentFree .. "% of disk free)")
     log("ALchemy Size: " .. osSizeKB .. " KB")
     local logFiles = fs.list("logs")
     log("Current Logs (" .. #logFiles .. "):")
@@ -120,7 +120,7 @@ local function clearLogFolder()
             elseif file:match("^[0-9a-f]+%.log$") then
                 fs.delete(fs.combine("logs", file))
             end
-        end
+        end 
         log("All logs cleared.")
     else
         log("No logs directory found.")
