@@ -48,27 +48,36 @@ end
 
 -- Recursively get total size (in bytes) of a directory
 local function getDirSize(path)
-  -- don’t descend into ROM
-  if path == "/rom" or path:sub(1,5) == "/rom/" then
-    return 0
-  end
-
-  local total = 0
-  for _, name in ipairs(fs.list(path)) do
-    local full = fs.combine(path, name)
-    if fs.isDir(full) then
-      total = total + getDirSize(full)
-    else
-      total = total + fs.getSize(full)
+    local total = 0
+    local filesCounted = 0
+    for _, name in ipairs(fs.list(path)) do
+        local full = fs.combine(path, name)
+        if fs.isDir(full) then
+            total = total + getDirSize(full)
+        else
+            total = total + fs.getSize(full)
+            print("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+            filesCounted = filesCounted + 1
+        end
     end
-  end
-  return total
+    print("Total size of " .. path .. ": " .. total .. " bytes " .. "(" .. filesCounted .. " files)")
+    return total
 end
 
--- Returns size of "/" in kilobytes
+-- Returns size of "/" in kilobytes, skipping /rom
 local function getRootSizeKB()
-    local bytes = getDirSize("/")
-    return math.floor(bytes / 1024)
+    local totalBytes = 0
+    for _, name in ipairs(fs.list("/")) do
+        if name ~= "rom" then
+            local full = fs.combine("/", name)
+            if fs.isDir(full) then
+                totalBytes = totalBytes + getDirSize(full)
+            else
+                totalBytes = totalBytes + fs.getSize(full)
+            end
+        end
+    end
+    return math.floor(totalBytes / 1024)
 end
 
 local function startSession()
@@ -125,7 +134,7 @@ local function clearLogFolder()
             elseif file:match("^[0-9a-f]+%.log$") then
                 fs.delete(fs.combine("logs", file))
             end
-        end 
+        end
         log("All logs cleared.")
     else
         log("No logs directory found.")
