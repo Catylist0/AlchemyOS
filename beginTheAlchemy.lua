@@ -59,8 +59,8 @@ local function startSession()
     local percentOfTotalSpaceFree = math.floor((freeSpaceKB / osSizeKB) * 100)
     log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentOfTotalSpaceFree .. "% of total used)")
     log("ALchemy Size: " .. osSizeKB .. " KB")
-    log("Current Logs:")
     local logFiles = fs.list("logs")
+    log("Current Logs (" .. #logFiles .. "):")
     for _, file in ipairs(logFiles) do
         if file:match("^%d+%.log$") then
             if file == SessionID .. ".log" then
