@@ -2,8 +2,6 @@ print("Beginning Alchemy...")
 
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
 local idFile = "recipe.lua"
-local downloadLimit = 10
-local downloadCount = 0
 
 -- ============================
 --   GITHUB RAW RATE-LIMIT SAFE INITIALIZER
@@ -22,9 +20,12 @@ if type(files) ~= "table" then error("Invalid file list") end
 
 local existingRecipe = fs.open("/recipe.lua", "r") or launchRecipe
 local currentVersion = existingRecipe.version
+if not existingRecipe then
+    print("Recipe load fail")
+end
 if not currentVersion then 
     currentVersion = "0.0.0"
-    print("Error, no saved current version, falling back to 0.0.0")
+    print("Error, no current recipe version, falling back to 0.0.0")
 end
 
 local shouldUpdate = false
@@ -36,22 +37,17 @@ print("New Version Detected: " .. tostring(shouldUpdate))
 -- Download each file (rate-limited)
 if shouldUpdate then
     for _, path in ipairs(files) do
-        if downloadCount < downloadLimit then
-            local url = repo .. path
-            print("Fetching " .. path)
-            local r = http.get(url)
-            if r then
-                if fs.getDir(path) ~= "" then fs.makeDir(fs.getDir(path)) end
-                local fh = fs.open(path, "w")
-                fh.write(r.readAll())
-                fh.close()
-                r.close()
-                downloadCount = downloadCount + 1
-            else
-                print("Failed: " .. path)
-            end
+        local url = repo .. path
+        print("Fetching " .. path)
+        local r = http.get(url)
+        if r then
+            if fs.getDir(path) ~= "" then fs.makeDir(fs.getDir(path)) end
+            local fh = fs.open(path, "w")
+            fh.write(r.readAll())
+            fh.close()
+            r.close()
         else
-            print("Rate limit reached. Skipping: " .. path)
+            print("Failed: " .. path)
         end
     end
 end
