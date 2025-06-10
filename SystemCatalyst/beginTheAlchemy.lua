@@ -149,15 +149,13 @@ startSession()
 local barEq = string.rep("=", consoleWidth)
 if DevMode then
     sleep(1)
-    print([[
-
-    ]])
+    term.clear()
+    print()
     print(barEq)
     log(title)
     print(barEq)
-    print([[
-    ]])
     sleep(1)
+    term.clear()
 else
     log(title)
 end
