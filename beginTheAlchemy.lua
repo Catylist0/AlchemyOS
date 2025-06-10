@@ -1,12 +1,17 @@
+local title = [[
+    _    _      _                          TM
+   / \  | | ___| |__   ___ _ __ ___  _   _ 
+  / _ \ | |/ __| '_ \ / _ \ '_ ` _ \| | | |
+ / ___ \| | (__| | | |  __/ | | | | | |_| |
+/_/   \_\_|\___|_| |_|\___|_| |_| |_|\__, |
+                                     |___/ 
+A ComputerCraft Operating System.
+]]
+
 print("Beginning Alchemy...")
 
 local repo = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
 local idFile = "recipe.lua"
-
--- ============================
---   GITHUB RAW RATE-LIMIT SAFE INITIALIZER
---   Limits file downloads per run to avoid 429s
--- ============================
 
 -- Fetch and load file list
 local res = http.get(repo .. idFile) or error("Failed to fetch " .. idFile)
@@ -18,12 +23,12 @@ local latestVersion = launchRecipe.version or error("No version found in " .. id
 fs.delete(tmp)
 if type(files) ~= "table" then error("Invalid file list") end
 
-local existingRecipe = fs.open("/recipe.lua", "r") or launchRecipe
+local existingRecipe = fs.exists("/recipe.lua") and dofile("/recipe.lua") or launchRecipe
 local currentVersion = existingRecipe.version
 if not existingRecipe then
     print("Recipe load fail")
 end
---print("Debug: Type of existingRecipe: " .. type(existingRecipe))
+
 if not currentVersion then 
     currentVersion = "0.0.0"
     print("Error, no current recipe version, falling back to 0.0.0")
