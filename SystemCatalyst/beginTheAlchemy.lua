@@ -161,7 +161,7 @@ if DevMode then
     print(barEq)
     sleep(1)
     if #Monitors > 0 then
-        term.redirect(Monitors[1])
+        term.redirect()
     end
     term.clear()
     term.setCursorPos(1, 1)
