@@ -83,7 +83,7 @@ local function startSession()
     local logFiles = fs.list("logs")
     log("Current Logs (" .. #logFiles .. "):")
     for _, file in ipairs(logFiles) do
-        if file:match("^%d+%.log$") then
+        if file:match("^[0-9a-f]+%.log$") then
             if file == SessionID .. ".log" then
                 log(" - " .. file .. " (current session)")
             else
