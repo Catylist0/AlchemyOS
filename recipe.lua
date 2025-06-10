@@ -7,6 +7,6 @@ ingredients.fileIdentities = {
     "program.lua"
 }
 
-ingredients.version = "0.0.7d"
+ingredients.version = "0.0.8d"
 
 return ingredients

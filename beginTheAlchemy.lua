@@ -139,8 +139,15 @@ log("Local Version: " .. currentVersion)
 local shouldUpdate = currentVersion ~= latestVersion
 log("New Version Detected: " .. tostring(shouldUpdate))
 
+-- check if the version ends in a lowercase d
+local isDevVersion = latestVersion:sub(-1) == "d"
+
+if isDevVersion then
+    log("Warning: This is a development version")
+end
+
 -- Download updates
-if shouldUpdate then
+if shouldUpdate or isDevVersion then
     for _, path in ipairs(files) do
         log("Fetching " .. path)
         local r = http.get(repo .. path)
