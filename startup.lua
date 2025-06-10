@@ -1,6 +1,6 @@
 term.clear()
-term.setCursorBline(false)
-term.setCursosPos(1, 1)
+term.setCursorBlink(false)
+term.setCursorPos(1, 1)
 
 os.pullEvent = os.pullEventRaw
 
