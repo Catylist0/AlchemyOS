@@ -19,10 +19,6 @@ if not ok then
     print("Default globals loaded.")
 end
 
-
-print("Welcome to AlchemyOS")
-sleep(1)
-
 G.OsDirectory = "SystemCatalyst"
 
 G.Monitors = { peripheral.find("monitor") }
@@ -101,8 +97,6 @@ local function purgeFalseCatalystFiles()
         end
     end
 end
-print("Loading AlchemyOS...")
-sleep(0.5)
 
 purgeFalseCatalystFiles()
 
