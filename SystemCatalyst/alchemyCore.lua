@@ -33,7 +33,7 @@ function aci.enter()
         log("Error during splash: " .. tostring(err))
         print("Error during splash: " .. tostring(err))
     end
-    sleep(1)
+    sleep(3)
     os.shutdown()
 end
 
