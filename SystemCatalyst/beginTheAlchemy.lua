@@ -172,7 +172,7 @@ if G.DevMode then
 else
     G.fn.log(title)
 end
-log("Beginning Alchemy...")
+G.fn.log("Beginning Alchemy...")
 
 local function logAllGlobalVars()
     local globalVars = {}
@@ -259,7 +259,7 @@ if not existingRecipe.version then
     G.fn.log("No current recipe version found, defaulting to 0.0.0")
 end
 
-Version = currentVersion -- Set global Version variable
+G.Version = currentVersion -- Set global Version variable
 
 if not http then
     G.fn.log("HTTP API is disabled")
@@ -283,7 +283,7 @@ local latestVersion = launchRecipe.version or error("No version found")
 
 if type(files) ~= "table" then error("Invalid file list") end
 
-log("Local Version: " .. currentVersion)
+G.log("Local Version: " .. currentVersion)
 
 local shouldUpdate = currentVersion ~= latestVersion
 if shouldUpdate then G.fn.log("New Version Detected: " .. tostring(latestVersion)) end
@@ -320,8 +320,8 @@ if shouldUpdate or isDevVersion then
 end
 
 currentVersion = latestVersion
-Version = currentVersion -- Update global Version variable just in case
+G.Version = currentVersion -- Update global Version variable just in case
 
-log("New Version: " .. tostring(currentVersion))
+G.log("New Version: " .. tostring(currentVersion))
 
 enterAlchemy()
