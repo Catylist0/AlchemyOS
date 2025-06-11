@@ -75,6 +75,8 @@ local function purgeFalseCatalystFiles()
         end
     end
 end
+print("Loading AlchemyOS...")
+sleep(0.5) -- give the system a moment to settle
 
 purgeFalseCatalystFiles()
 
