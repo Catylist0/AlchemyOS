@@ -30,60 +30,34 @@ local function printReleaseSplash()
     term.redirect(term.native())
 end
 
-local function wrap(text, width)
-    local lines = {}
-    for paragraph in text:gmatch("([^\n]*)\n?") do
-        if paragraph == "" then
-            table.insert(lines, "")
-        else
-            local current = ""
-            for word in paragraph:gmatch("%S+") do
-                if #current == 0 then
-                    if #word <= width then
-                        current = word
-                    else
-                        for i = 1, #word, width do
-                            table.insert(lines, word:sub(i, i + width - 1))
-                        end
-                        current = ""
-                    end
-                else
-                    if #current + 1 + #word <= width then
-                        current = current .. " " .. word
-                    else
-                        table.insert(lines, current)
-                        if #word <= width then
-                            current = word
-                        else
-                            for i = 1, #word, width do
-                                table.insert(lines, word:sub(i, i + width - 1))
-                            end
-                            current = ""
-                        end
-                    end
-                end
-            end
-            if #current > 0 then table.insert(lines, current) end
-        end
-    end
-    return lines
-end
+function printMultiPage(text)
+  local p = peripheral.find("printer")
+  if not p then G.fn.log("printMultiPage: No printer attached") return false end
+  if not pcall(p.newPage, p) then G.fn.log("printMultiPage: newPage failed") return false end
 
-local function printMultiPage(text)
-    local printer = peripheral.find("printer") or error("No printer attached")
-    printer.newPage()
-    local w, h = printer.getPageSize()
-    local lines = wrap(text, w)
-    for i = 1, #lines, h do
-        if i > 1 then printer.newPage() end
-        for y = 1, h do
-            local idx = i + y - 1
-            if idx > #lines then break end
-            printer.setCursorPos(1, y)
-            printer.write(lines[idx])
-        end
-        printer.endPage()
+  local w, h = p.getPageSize()
+  if type(w) ~= "number" or type(h) ~= "number" then
+    G.fn.log("printMultiPage: invalid page size")
+    pcall(p.endPage, p)
+    return false
+  end
+
+  local lines = wrap(text, w)
+  for i = 1, #lines, h do
+    if i > 1 and not pcall(p.newPage, p) then
+      G.fn.log("printMultiPage: newPage failed")
+      break
     end
+    for y = 1, h do
+      local idx = i + y - 1
+      if idx > #lines then break end
+      pcall(p.setCursorPos, p, 1, y)
+      pcall(p.write, p, lines[idx])
+    end
+    pcall(p.endPage, p)
+  end
+
+  return true
 end
 
 function aci.enter()
@@ -102,7 +76,7 @@ function aci.enter()
         local lastWillFile = fs.open(lastWillPath, "r")
         local lastWillContent = lastWillFile.readAll()
         lastWillFile.close()
-        pcall(printMultiPage(lastWillContent))
+        printMultiPage(lastWillContent)
     else
         G.fn.log("No last will and testament found.")
     end
