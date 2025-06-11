@@ -12,9 +12,10 @@ local function printReleaseSplash()
         term.setCursorPos(1, (consoleHeight / 2) - 6)
         local barEq = string.rep("=", consoleWidth)
         local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
+        local barEqBottom = tostring(string.rep("=", consoleWidth - #endOfLowerBracket) .. endOfLowerBracket)
         print(barEqTop)
         log(TitleSplashBare)
-        print(barEq)
+        print(barEqBottom)
     end
 
     term.redirect(term.native())
