@@ -177,7 +177,35 @@ else
 end
 log("Beginning Alchemy...")
 
+local function logAllGlobalVars()
+    local globalVars = {}
+    for k, v in pairs(_G) do
+        if type(v) ~= "function" and type(v) ~= "table" then
+            globalVars[k] = v
+        end
+    end
+    log("Global Variables:")
+    for k, v in pairs(globalVars) do
+        log(string.format("%s: %s", k, tostring(v)))
+    end
+end
+
+local function logAllGlobalTables()
+    local globalTables = {}
+    for k, v in pairs(_G) do
+        if type(v) == "table" then
+            globalTables[k] = v
+        end
+    end
+    log("Global Tables:")
+    for k, v in pairs(globalTables) do
+        log(string.format("%s: %s", k, textutils.serialize(v)))
+    end
+end
+
 local function enterAlchemy()
+    logAllGlobalVars()
+    logAllGlobalTables()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
@@ -186,6 +214,7 @@ local function enterAlchemy()
     end
     alchemyCore.enter()
     log("FATAL ERROR: Alchemy Core Crashed!")
+    sleep(1)
     os.shutdown("Dousing Alchemy: Alchemy Core Crashed!")
 end
 
