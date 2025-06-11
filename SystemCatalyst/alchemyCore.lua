@@ -7,3 +7,5 @@ function aci.enter()
     sleep(3)
     hang(0, "end")
 end
+
+return aci
