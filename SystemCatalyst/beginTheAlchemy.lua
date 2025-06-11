@@ -174,49 +174,28 @@ else
 end
 G.fn.log("Beginning Alchemy...")
 
-local function logAllGlobalVars()
-    local globalVars = {}
-    for k, v in pairs(_G) do
-        if type(v) ~= "function" and type(v) ~= "table" then
-            globalVars[k] = v
-        end
-    end
-    G.fn.log("Global Variables:")
-    for k, v in pairs(globalVars) do
-        G.fn.log(string.format("%s: %s", k, tostring(v)))
-    end
-end
-
-local function logAllGlobalTables()
-    local globalTables = {}
-    for k, v in pairs(_G) do
+local function logAllGlobals()
+    local function formatGlobalPrint(k, v)
         if type(v) == "table" then
-            globalTables[k] = v
+            G.fn.log(string.format("%s: { ... }", k))
+        elseif type(v) == "function" then
+            G.fn.log(string.format("%s: function()", k))
+        elseif type(v) == "string" then
+            G.fn.log(string.format("%s: \"%s\"", k, v))
+        else
+            G.fn.log(string.format("%s: %s", k, tostring(v)))
         end
     end
-    G.fn.log("Global Tables:")
-    for k, v in pairs(globalTables) do
-        G.fn.log(string.format("%s: %s", k, textutils.serialize(v)))
+    for k, v in pairs(G) do
+        formatGlobalPrint(k, v)
     end
-end
-
-local function logAllGlobalFunctions()
-    local globalFunctions = {}
-    for k, v in pairs(_G) do
-        if type(v) == "function" then
-            globalFunctions[k] = v
-        end
-    end
-    G.fn.log("Global Functions:")
-    for k, v in pairs(globalFunctions) do
-        G.fn.log(string.format("%s: %s", k, tostring(v)))
+    for k, v in pairs(G.fn) do
+        formatGlobalPrint(k, v)
     end
 end
 
 local function enterAlchemy()
-    logAllGlobalVars()
-    --logAllGlobalTables()
-    --logAllGlobalFunctions()
+    logAllGlobals()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
