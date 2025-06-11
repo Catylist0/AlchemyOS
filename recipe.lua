@@ -6,6 +6,6 @@ ingredients.fileIdentities = {
     "SystemCatalyst/alchemyCore.lua",
 }
 
-ingredients.version = "0.1.1"
+ingredients.version = "0.1.2"
 
 return ingredients
