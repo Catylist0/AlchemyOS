@@ -31,11 +31,7 @@ function aci.enter()
     log("Entering Alchemy Core...")
     log("Alchemy ".. Version)
     sleep(1)
-    local ok, err = pcall(printReleaseSplash())
-    if not ok then
-        log("Error during splash: " .. tostring(err))
-        print("Error during splash: " .. tostring(err))
-    end
+    printReleaseSplash()
     sleep(3)
     os.shutdown()
 end
