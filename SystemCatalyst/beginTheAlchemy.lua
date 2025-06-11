@@ -36,10 +36,10 @@ end
 
 G.SessionID = randomHash()
 
-local endOfBracket = tostring("["..SessionID.."]==")
+local endOfBracket = tostring("["..G.SessionID.."]==")
 
 function log(msg)
-    local logFile = "logs/" .. SessionID .. ".log"
+    local logFile = "logs/" .. G.SessionID .. ".log"
     local f = fs.open(logFile, "a")
     if f then
         f.writeLine(textutils.formatTime(os.time(), true) .. " - " .. msg)
@@ -92,10 +92,10 @@ local function startSession()
     if not fs.isDir("logs") then
         fs.makeDir("logs")
     end
-    local logFile = "logs/" .. SessionID .. ".log"
+    local logFile = "logs/" .. G.SessionID .. ".log"
     local f = fs.open(logFile, "w")
     f.close()
-    log("Session started: " .. SessionID)
+    log("Session started: " .. G.SessionID)
     local freeSpaceKB = math.floor(fs.getFreeSpace("/") / 1024)
     local osSizeKB = getRootSizeKB()
     local totalKB = freeSpaceKB + osSizeKB
@@ -106,7 +106,7 @@ local function startSession()
     log("Current Logs (" .. #logFiles .. "):")
     for _, file in ipairs(logFiles) do
         if file:match("^[0-9a-f]+%.log$") then
-            if file == SessionID .. ".log" then
+            if file == G.SessionID .. ".log" then
                 log(" - " .. file .. " (current session)")
             else
                 log(" - " .. file)
@@ -116,7 +116,7 @@ local function startSession()
 end
 
 function printLogs()
-    local logFile = "logs/" .. SessionID .. ".log"
+    local logFile = "logs/" .. G.SessionID .. ".log"
     if fs.exists(logFile) then
         local f = fs.open(logFile, "r")
         if f then
@@ -137,7 +137,7 @@ local function clearLogFolder()
         local logFiles = fs.list("logs")
         for _, file in ipairs(logFiles) do
             -- exlude current session log
-            if file == SessionID .. ".log" then
+            if file == G.SessionID .. ".log" then
 
             elseif file:match("^[0-9a-f]+%.log$") then
                 fs.delete(fs.combine("logs", file))
