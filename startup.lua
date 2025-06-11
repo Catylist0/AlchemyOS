@@ -16,7 +16,15 @@ os.pullEvent = os.pullEventRaw
 
 local hangingToTop = false
 
+log = false
+
 function hang(code, optionalErrText)
+    if not DevMode then
+        if log then
+            log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
+        end
+        os.exit()
+    end
     if not optionalErrText then
         optionalErrText = "generic"
     end
