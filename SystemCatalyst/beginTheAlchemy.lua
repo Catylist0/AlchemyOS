@@ -330,6 +330,7 @@ end
 -- Download updates
 if shouldUpdate or isDevVersion then
     pullAlchemyUpdates()
+    if not isDevVersion and not G.DevMode then os.reboot() end
 end
 
 currentVersion = latestVersion
