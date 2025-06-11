@@ -7,7 +7,7 @@ local title = [[
                                      |___/
 A ComputerCraft Operating System.
 
-By Cauldron Microsystems:
+By Catylist MicroElectric
 Subsidiary of Catylist Electrochemical
 
 All rights reserved.
