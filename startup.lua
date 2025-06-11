@@ -8,6 +8,7 @@ local ok, err = pcall(function()
 end)
 
 if not ok then
+    print("Fallingback to default globals due to error: " .. tostring(err))
   -- fallback
   G = {
     DevMode = false,
