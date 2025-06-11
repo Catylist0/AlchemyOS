@@ -27,6 +27,8 @@ function hang(code, optionalErrText)
         if log then
             log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
         end
+        print("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
+        sleep(1)
         os.shutdown()
     end
     if not optionalErrText then
