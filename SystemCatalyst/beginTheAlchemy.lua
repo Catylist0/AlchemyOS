@@ -203,10 +203,23 @@ local function logAllGlobalTables()
     end
 end
 
+local function logAllGlobalFunctions()
+    local globalFunctions = {}
+    for k, v in pairs(_G) do
+        if type(v) == "function" then
+            globalFunctions[k] = v
+        end
+    end
+    log("Global Functions:")
+    for k, v in pairs(globalFunctions) do
+        log(string.format("%s: %s", k, tostring(v)))
+    end
+end
 
 local function enterAlchemy()
     logAllGlobalVars()
     logAllGlobalTables()
+    logAllGlobalFunctions()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
