@@ -30,7 +30,7 @@ local function printReleaseSplash()
     term.redirect(term.native())
 end
 
-function printMultiPage(text)
+function G.fn.printMultiPage(text)
   local p = peripheral.find("printer")
   if not p then G.fn.log("printMultiPage: No printer attached") return false end
   if not pcall(p.newPage, p) then G.fn.log("printMultiPage: newPage failed") return false end
@@ -76,7 +76,7 @@ function aci.enter()
         local lastWillFile = fs.open(lastWillPath, "r")
         local lastWillContent = lastWillFile.readAll()
         lastWillFile.close()
-        printMultiPage(lastWillContent)
+        G.fn.printMultiPage(lastWillContent)
     else
         G.fn.log("No last will and testament found.")
     end

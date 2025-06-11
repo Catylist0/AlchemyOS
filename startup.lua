@@ -28,8 +28,24 @@ G.DevMode = false -- Set to true to enable developer mode features
 G.fn = {}
 
 function G.fn.saveTable(tbl, path)
+  -- sanitize: copy everything except the "fn" subtable and any functions
+  local function sanitize(t)
+    local o = {}
+    for k, v in pairs(t) do
+      if k ~= "fn" then
+        if type(v) == "table" then
+          o[k] = sanitize(v)
+        elseif type(v) ~= "function" then
+          o[k] = v
+        end
+      end
+    end
+    return o
+  end
+
+  local data = sanitize(tbl)
   local f = fs.open(path, "w")
-  f.write("return " .. textutils.serialize(tbl))
+  f.write("return " .. textutils.serialize(data))
   f.close()
 end
 
