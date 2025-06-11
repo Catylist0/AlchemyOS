@@ -32,18 +32,19 @@ end
 
 local function printMultiPage(text)
     local printer = peripheral.find("printer")
-    if not printer then error("No printer found") end
-    local w, h = printer.getPageSize()   -- width,height :contentReference[oaicite:0]{index=0}
-    local lines = cc.strings.wrap(text, w) -- wrap text to page width :contentReference[oaicite:1]{index=1}
+    if not printer then return G.fn.log("No printer found.") end
+    printer.newPage()
+    local w, h = printer.getPageSize()
+    local lines = cc.strings.wrap(text, w)
     for i = 1, #lines, h do
-        printer.newPage()                -- start a new page :contentReference[oaicite:2]{index=2}
+        if i > 1 then printer.newPage() end
         for y = 1, h do
             local idx = i + y - 1
             if idx > #lines then break end
-            printer.setCursorPos(1, y) -- position cursor on line y :contentReference[oaicite:3]{index=3}
-            printer.write(lines[idx]) -- print the line :contentReference[oaicite:4]{index=4}
+            printer.setCursorPos(1, y)
+            printer.write(lines[idx])
         end
-        printer.endPage()        -- finish and output page :contentReference[oaicite:5]{index=5}
+        printer.endPage()
     end
 end
 
