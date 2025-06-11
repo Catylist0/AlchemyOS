@@ -219,7 +219,7 @@ end
 local function enterAlchemy()
     logAllGlobalVars()
     logAllGlobalTables()
-    logAllGlobalFunctions()
+    --logAllGlobalFunctions()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
