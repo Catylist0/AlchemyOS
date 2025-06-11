@@ -27,6 +27,16 @@ G.DevMode = false -- Set to true to enable developer mode features
 
 G.fn = {}
 
+function G.fn.saveTable(tbl, path)
+  local f = fs.open(path, "w")
+  f.write("return " .. textutils.serialize(tbl))
+  f.close()
+end
+
+function G.fn.onShutdown()
+  G.fn.saveTable(G, "SystemCatalyst/globals.lua")
+end
+
 if G.DevMode then
     print("Starting AlchemyOS Dev Environment...")
 end
@@ -36,8 +46,6 @@ G.Version = "not loaded yet..."
 os.pullEvent = os.pullEventRaw
 
 local hangingToTop = false
-
-G.fn.log = false
 
 function G.hang(code, optionalErrText)
     if log then
@@ -75,12 +83,14 @@ function G.hang(code, optionalErrText)
                 term.setCursorPos(1, 1)
                 G.fn.log("Rebooting...")
                 G.ShouldReboot = true
+                G.fn.onShutdown()
                 os.reboot("Dousing Alchemy.. ")
             end
         end
     end
     G.fn.log("Rebooting...")
     G.ShouldReboot = false
+    G.fn.onShutdown()
     os.reboot()
 end
 
