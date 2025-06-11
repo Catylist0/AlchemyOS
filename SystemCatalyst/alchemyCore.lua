@@ -32,7 +32,7 @@ end
 function aci.enter()
     print("PEOPLE OF EARTH REJOICE!!!!")
     G.fn.log("Entering Alchemy Core...")
-    G.fn.log("Alchemy " .. G.Version)
+    G.fn.log("Alchemy " .. tostring(G.Version))
     sleep(1)
     printReleaseSplash()
     sleep(3)
