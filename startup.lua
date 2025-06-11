@@ -40,25 +40,23 @@ local hangingToTop = false
 G.fn.log = false
 
 function G.hang(code, optionalErrText)
-    if not G.DevMode then
-        if log then
-            log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
-        end
+    if log then
+        log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
+    else
         print("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
-        sleep(1)
-        os.shutdown()
     end
     if not optionalErrText then
         optionalErrText = "generic"
     end
     local s = "douse"
-    i = 1
+    local i = 1
     local formattedCode = string.format("%03d", code)
     if hangingToTop then
         print("SubError of: ")
         error("DousingUp")
     end
-    while true do
+    local douseTime = os.clock() + 3 -- + seconds to douse
+    while douseTime < os.clock() do
         local _, c = os.pullEvent("char")
         if c == s:sub(i, i) then
             i = i + 1
@@ -75,10 +73,13 @@ function G.hang(code, optionalErrText)
             elseif not G.DevMode then
                 term.clear()
                 term.setCursorPos(1, 1)
+                G.fn.log("Rebooting...")
                 os.reboot("Dousing Alchemy.. ")
             end
         end
     end
+    G.fn.log("Rebooting...")
+    os.reboot()
 end
 
 -- Load and run the main initialization script in our own globals
