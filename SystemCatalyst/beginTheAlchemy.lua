@@ -175,15 +175,16 @@ end
 G.fn.log("Beginning Alchemy...")
 
 local function logAllGlobals()
+    G.fn.log("Logging top Level Globals:")
     local function formatGlobalPrint(k, v)
         if type(v) == "table" then
-            G.fn.log(string.format("%s: { ... }", k))
+            G.fn.log("G: "..string.format("%s: { ... }", k))
         elseif type(v) == "function" then
-            G.fn.log(string.format("%s: function()", k))
+            G.fn.log("G: "..string.format("%s: function()", k))
         elseif type(v) == "string" then
-            G.fn.log(string.format("%s: \"%s\"", k, v))
+            G.fn.log("G: "..string.format("%s: \"%s\"", k, v))
         else
-            G.fn.log(string.format("%s: %s", k, tostring(v)))
+            G.fn.log("G: "..string.format("%s: %s", k, tostring(v)))
         end
     end
     for k, v in pairs(G) do
