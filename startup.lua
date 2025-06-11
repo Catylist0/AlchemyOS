@@ -1,7 +1,23 @@
 term.clear()
 term.setCursorPos(1, 1)
 term.setCursorBlink(false)
-local G = require("SystemCatalyst.globals")
+
+local G
+local ok, err = pcall(function()
+  G = require("SystemCatalyst.globals")
+end)
+
+if not ok then
+  -- fallback
+  G = {
+    DevMode = false,
+    Version = "not loaded yet...",
+    OsDirectory = "SystemCatalyst",
+    Monitors = { peripheral.find("monitor") },
+    fn = {}
+  }
+end
+
 
 print("Welcome to AlchemyOS")
 sleep(1)
