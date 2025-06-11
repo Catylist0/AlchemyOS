@@ -39,6 +39,7 @@ function aci.enter()
     term.clear()
     term.setCursorPos(1, 1)
     G.printLogs()
+    sleep(10)
 end
 
 return aci
