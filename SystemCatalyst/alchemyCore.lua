@@ -9,7 +9,7 @@ G.fn = G.fn or {}
 local function printReleaseSplash()
     G.fn.log("Detected Monitors: " .. #G.Monitors)
     local endOfBracket = tostring("[" .. G.SessionID .. "]==")
-    local endOfLowerBracket = tostring("[" .. G.Version .. "]====")
+    local endOfLowerBracket = tostring("[" .. G.Version .. "]==")
     local splash = function()
         local consoleWidth, consoleHeight = term.getSize()
         term.clear()
