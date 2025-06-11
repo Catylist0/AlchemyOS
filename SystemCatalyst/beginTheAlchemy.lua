@@ -34,6 +34,8 @@ end
 
 SessionID = randomHash()
 
+local endOfBracket = tostring("["..SessionID.."]==")
+
 function log(msg)
     local logFile = "logs/" .. SessionID .. ".log"
     local f = fs.open(logFile, "a")
@@ -158,7 +160,8 @@ if DevMode then
     term.clear()
     term.setCursorPos(1, (consoleHeight / 2) - 6)
     local barEq = string.rep("=", consoleWidth)
-    print(barEq)
+    local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
+    print(barEqTop)
     log(title)
     print(barEq)
     if #Monitors > 0 then
