@@ -207,11 +207,11 @@ local function cullSystemCatalyst()
     local filesInCatalyst = fs.list("SystemCatalyst")
     for _, file in ipairs(filesInCatalyst) do
         if not recognizedCatalystFiles[file] then
-            if G.Recipe.localOnlyFiles[file] then
+            local fullPath = fs.combine("SystemCatalyst", file)
+            if G.Recipe.localOnlyFiles[fullPath] then
                 G.fn.log("Skipping local-only file: " .. file)
                 goto continue
             end
-            local fullPath = fs.combine("SystemCatalyst", file)
             if fs.isDir(fullPath) then
                 fs.delete(fullPath) -- delete directory and contents
                 G.fn.log("Deleted unrecognized directory: " .. fullPath)
