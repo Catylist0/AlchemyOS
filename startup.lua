@@ -10,7 +10,11 @@ end)
 if not ok then
     print("Fallingback to default globals due to error: " .. tostring(err))
     sleep(1)
-    fs.makeDir("SystemCatalyst") local f=fs.open("SystemCatalyst/globals.lua","w") f.write("return { DevMode = false, Version = \"not loaded yet...\", OsDirectory = \"SystemCatalyst\", Monitors = { peripheral.find(\"monitor\") }, fn = {} }") f.close()
+    fs.makeDir("SystemCatalyst")
+    local f = fs.open("SystemCatalyst/globals.lua", "w")
+    f.write(
+    "return { DevMode = false, Version = \"not loaded yet...\", OsDirectory = \"SystemCatalyst\", Monitors = { peripheral.find(\"monitor\") }, fn = {} }")
+    f.close()
     G = require("SystemCatalyst.globals")
     print("Default globals loaded.")
 end

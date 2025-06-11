@@ -4,10 +4,12 @@ local aci = alchemyCore
 
 local G = require "SystemCatalyst.globals"
 
+G.fn = G.fn or {}
+
 local function printReleaseSplash()
-    G.log("Detected Monitors: " .. #G.Monitors)
-    local endOfBracket = tostring("["..G.SessionID.."]==")
-    local endOfLowerBracket = tostring("["..G.Version.."]====")
+    G.fn.log("Detected Monitors: " .. #G.Monitors)
+    local endOfBracket = tostring("[" .. G.SessionID .. "]==")
+    local endOfLowerBracket = tostring("[" .. G.Version .. "]====")
     local splash = function()
         local consoleWidth, consoleHeight = term.getSize()
         term.clear()
@@ -15,7 +17,7 @@ local function printReleaseSplash()
         local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
         local barEqBottom = tostring(string.rep("=", consoleWidth - #endOfLowerBracket) .. endOfLowerBracket)
         print(barEqTop)
-        G.log(_G.TitleSplashBare)
+        G.fn.log(_G.TitleSplashBare)
         print(barEqBottom)
     end
 
@@ -29,8 +31,8 @@ end
 
 function aci.enter()
     print("PEOPLE OF EARTH REJOICE!!!!")
-    G.log("Entering Alchemy Core...")
-    G.log("Alchemy ".. G.Version)
+    G.fn.log("Entering Alchemy Core...")
+    G.fn.log("Alchemy " .. G.Version)
     sleep(1)
     printReleaseSplash()
     sleep(3)
