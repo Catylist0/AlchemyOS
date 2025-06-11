@@ -56,7 +56,7 @@ function G.hang(code, optionalErrText)
         error("DousingUp")
     end
     local douseTime = os.clock() + 3 -- + seconds to douse
-    while douseTime < os.clock() do
+    while douseTime < os.clock() or not G.ShouldReboot do
         local _, c = os.pullEvent("char")
         if c == s:sub(i, i) then
             i = i + 1
@@ -74,11 +74,13 @@ function G.hang(code, optionalErrText)
                 term.clear()
                 term.setCursorPos(1, 1)
                 G.fn.log("Rebooting...")
+                G.ShouldReboot = true
                 os.reboot("Dousing Alchemy.. ")
             end
         end
     end
     G.fn.log("Rebooting...")
+    G.ShouldReboot = false
     os.reboot()
 end
 
