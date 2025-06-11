@@ -179,9 +179,14 @@ log("Beginning Alchemy...")
 
 local function enterAlchemy()
     clearLogFolder()
-    print("Success")
-    sleep(3)
-    hang(0, "ending")
+    local alchemyCore = require "SystemCatalyst.alchemyCore"
+    if type(alchemyCore) ~= "table" or not alchemyCore.enter then
+        log("Failed to load alchemyCore module")
+        return hang(5, "Failed to load alchemyCore module")
+    end
+    alchemyCore.enter()
+    log("FATAL ERROR: Alchemy Core Crashed!")
+    os.shutdown("Dousing Alchemy: Alchemy Core Crashed!")
 end
 
 local repo    = "https://raw.githubusercontent.com/Catylist0/AlchemyOS/main/"
