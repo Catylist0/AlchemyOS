@@ -4,19 +4,15 @@ term.setCursorBlink(false)
 
 local G
 local ok, err = pcall(function()
-  G = require("SystemCatalyst.globals")
+    G = require("SystemCatalyst.globals")
 end)
 
 if not ok then
     print("Fallingback to default globals due to error: " .. tostring(err))
-  -- fallback
-  G = {
-    DevMode = false,
-    Version = "not loaded yet...",
-    OsDirectory = "SystemCatalyst",
-    Monitors = { peripheral.find("monitor") },
-    fn = {}
-  }
+    sleep(1)
+    fs.makeDir("SystemCatalyst") local f=fs.open("SystemCatalyst/globals.lua","w") f.write("return { DevMode = false, Version = \"not loaded yet...\", OsDirectory = \"SystemCatalyst\", Monitors = { peripheral.find(\"monitor\") }, fn = {} }") f.close()
+    G = require("SystemCatalyst.globals")
+    print("Default globals loaded.")
 end
 
 
@@ -55,7 +51,8 @@ function hang(code, optionalErrText)
     if not optionalErrText then
         optionalErrText = "generic"
     end
-    local s = "douse" i = 1
+    local s = "douse"
+    i = 1
     local formattedCode = string.format("%03d", code)
     if hangingToTop then
         print("SubError of: ")
@@ -87,7 +84,7 @@ end
 -- Load and run the main initialization script in our own globals
 local chunk, loadErr = loadfile(G.OsDirectory .. "/beginTheAlchemy.lua")
 if not chunk then
-    hang(1, "Startup Error loading beginTheAlchemy.lua: "..tostring(loadErr))
+    hang(1, "Startup Error loading beginTheAlchemy.lua: " .. tostring(loadErr))
 end
 
 -- remove any file from the root that is present in the OsDirectory
@@ -106,10 +103,10 @@ sleep(0.5)
 purgeFalseCatalystFiles()
 
 local success, runErr = pcall(function()
-  require(G.OsDirectory .. ".beginTheAlchemy")
+    require(G.OsDirectory .. ".beginTheAlchemy")
 end)
 
 if not success then
-  local msg = (type(runErr) == "string") and runErr or tostring(runErr)
-  hang(2, "Startup Error: " .. msg)
+    local msg = (type(runErr) == "string") and runErr or tostring(runErr)
+    hang(2, "Startup Error: " .. msg)
 end
