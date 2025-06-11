@@ -2,6 +2,10 @@ term.clear()
 term.setCursorPos(1, 1)
 term.setCursorBlink(false)
 
+print("Welcome to AlchemyOS")
+
+sleep(1)
+
 Monitors = { peripheral.find("monitor") }
 
 DevMode = false -- Set to true to enable developer mode features
