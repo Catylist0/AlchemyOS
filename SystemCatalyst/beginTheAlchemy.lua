@@ -283,7 +283,7 @@ local latestVersion = launchRecipe.version or error("No version found")
 
 if type(files) ~= "table" then error("Invalid file list") end
 
-G.log("Local Version: " .. currentVersion)
+G.fn.log("Local Version: " .. currentVersion)
 
 local shouldUpdate = currentVersion ~= latestVersion
 if shouldUpdate then G.fn.log("New Version Detected: " .. tostring(latestVersion)) end
@@ -322,6 +322,6 @@ end
 currentVersion = latestVersion
 G.Version = currentVersion -- Update global Version variable just in case
 
-G.log("New Version: " .. tostring(currentVersion))
+G.fn.log("New Version: " .. tostring(currentVersion))
 
 enterAlchemy()
