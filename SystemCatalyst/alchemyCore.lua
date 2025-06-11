@@ -28,7 +28,11 @@ function aci.enter()
     print("PEOPLE OF EARTH REJOICE!!!!")
     log("Entering Alchemy Core...")
     log("Alchemy ".. Version)
-    printReleaseSplash()
+    local ok, err = pcall(printReleaseSplash())
+    if not ok then
+        log("Error during splash: " .. tostring(err))
+        print("Error during splash: " .. tostring(err))
+    end
     sleep(1)
     hang(0, "end")
 end
