@@ -203,7 +203,10 @@ local function logAllGlobalTables()
     end
 end
 
+
 local function enterAlchemy()
+    term.clear()
+    term.setCursorPos(1, 1)
     logAllGlobalVars()
     logAllGlobalTables()
     clearLogFolder()
