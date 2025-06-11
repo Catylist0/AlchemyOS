@@ -17,7 +17,7 @@ local function printReleaseSplash()
         local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
         local barEqBottom = tostring(string.rep("=", consoleWidth - #endOfLowerBracket) .. endOfLowerBracket)
         print(barEqTop)
-        G.fn.log(_G.TitleSplashBare)
+        print(G.TitleSplashBare)
         print(barEqBottom)
     end
 
