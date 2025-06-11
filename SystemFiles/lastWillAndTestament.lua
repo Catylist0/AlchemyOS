@@ -32,6 +32,10 @@ Rosthorn Building is to be given entirely to Catylist and Voicemail 50/50.
 Power Plant Operations Corporation is to be given entirely to Catylist.
 OuterCity Concrete & Brickworks is to be split evenly between Catylist, Voicemail, and the government.
 Rosthorn Broadcasting is to be given entirely to Voicemail.
+
+To The Government
+I hereby bequeath, in the event of my death:
+80% of the central bank. 10% to go to Catylist and 10% to Voicemail.
 ]]
 
 return lastWill
