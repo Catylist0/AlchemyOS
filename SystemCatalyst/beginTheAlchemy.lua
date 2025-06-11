@@ -18,7 +18,7 @@ G.TitleSplashBare = title
 local consoleWidth, consoleHeight = term.getSize()
 
 if G.DevMode == nil then
-    hang(3, "SystemVar 'DevMode' is not set or accessible.")
+    G.hang(3, "SystemVar 'DevMode' is not set or accessible.")
 end
 
 -- Better pseudo-entropy without HTTP
@@ -38,7 +38,7 @@ G.SessionID = randomHash()
 
 local endOfBracket = tostring("["..G.SessionID.."]==")
 
-function log(msg)
+function G.log(msg)
     local logFile = "logs/" .. G.SessionID .. ".log"
     local f = fs.open(logFile, "a")
     if f then
@@ -46,7 +46,7 @@ function log(msg)
         if G.DevMode then print(msg) end
         f.close()
     else
-        hang(4, "Failed to open log file: " .. logFile)
+        G.hang(4, "Failed to open log file: " .. logFile)
     end
 end
 
@@ -61,7 +61,7 @@ local function getDirSize(path)
             total = total + getDirSize(full)
         else
             total = total + fs.getSize(full)
-            log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+            G.log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
             filesCounted = filesCounted + 1
         end
     end
@@ -79,12 +79,12 @@ local function getRootSizeKB()
                 totalBytes = totalBytes + getDirSize(full)
             else
                 totalBytes = totalBytes + fs.getSize(full)
-                log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
+                G.log("Size of " .. full .. ": " .. fs.getSize(full) .. " bytes")
                 filesCounted = filesCounted + 1
             end
         end
     end
-    log("Total size of Root: " .. totalBytes .. " bytes " .. "(" .. filesCounted .. " files)")
+    G.log("Total size of Root: " .. totalBytes .. " bytes " .. "(" .. filesCounted .. " files)")
     return math.floor(totalBytes / 1024)
 end
 
@@ -95,21 +95,21 @@ local function startSession()
     local logFile = "logs/" .. G.SessionID .. ".log"
     local f = fs.open(logFile, "w")
     f.close()
-    log("Session started: " .. G.SessionID)
+    G.log("Session started: " .. G.SessionID)
     local freeSpaceKB = math.floor(fs.getFreeSpace("/") / 1024)
     local osSizeKB = getRootSizeKB()
     local totalKB = freeSpaceKB + osSizeKB
     local percentFree = math.floor(freeSpaceKB / totalKB * 100)
-    log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentFree .. "% of disk free)")
-    log("ALchemy Size: " .. osSizeKB .. " KB")
+    G.log("Disk Space remaining: " .. freeSpaceKB .. " KB (" .. percentFree .. "% of disk free)")
+    G.log("ALchemy Size: " .. osSizeKB .. " KB")
     local logFiles = fs.list("logs")
-    log("Current Logs (" .. #logFiles .. "):")
+    G.log("Current Logs (" .. #logFiles .. "):")
     for _, file in ipairs(logFiles) do
         if file:match("^[0-9a-f]+%.log$") then
             if file == G.SessionID .. ".log" then
-                log(" - " .. file .. " (current session)")
+                G.log(" - " .. file .. " (current session)")
             else
-                log(" - " .. file)
+                G.log(" - " .. file)
             end
         end
     end
@@ -143,18 +143,18 @@ local function clearLogFolder()
                 fs.delete(fs.combine("logs", file))
             end
         end
-        log("All logs cleared.")
+        G.log("All logs cleared.")
     else
-        log("No logs directory found.")
+        G.log("No logs directory found.")
     end
 end
 
 startSession()
 
 if G.DevMode then
-    log("Detected Monitors: " .. #Monitors)
+    G.log("Detected Monitors: " .. #Monitors)
     if #Monitors > 0 then
-        log("Redirecting to monitor: " .. tostring(Monitors[1]))
+        G.log("Redirecting to monitor: " .. tostring(Monitors[1]))
         term.redirect(Monitors[1])
         consoleWidth, consoleHeight = term.getSize(Monitors[1])
     end
@@ -163,14 +163,14 @@ if G.DevMode then
     local barEq = string.rep("=", consoleWidth)
     local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
     print(barEqTop)
-    log(title)
+    G.log(title)
     print(barEq)
     if #Monitors > 0 then
         term.redirect(term.native())
-        log("Redirected back to terminal.")
+        G.log("Redirected back to terminal.")
     end
 else
-    log(title)
+    G.log(title)
 end
 log("Beginning Alchemy...")
 
@@ -181,9 +181,9 @@ local function logAllGlobalVars()
             globalVars[k] = v
         end
     end
-    log("Global Variables:")
+    G.log("Global Variables:")
     for k, v in pairs(globalVars) do
-        log(string.format("%s: %s", k, tostring(v)))
+        G.log(string.format("%s: %s", k, tostring(v)))
     end
 end
 
@@ -194,9 +194,9 @@ local function logAllGlobalTables()
             globalTables[k] = v
         end
     end
-    log("Global Tables:")
+    G.log("Global Tables:")
     for k, v in pairs(globalTables) do
-        log(string.format("%s: %s", k, textutils.serialize(v)))
+        G.log(string.format("%s: %s", k, textutils.serialize(v)))
     end
 end
 
@@ -207,9 +207,9 @@ local function logAllGlobalFunctions()
             globalFunctions[k] = v
         end
     end
-    log("Global Functions:")
+    G.log("Global Functions:")
     for k, v in pairs(globalFunctions) do
-        log(string.format("%s: %s", k, tostring(v)))
+        G.log(string.format("%s: %s", k, tostring(v)))
     end
 end
 
@@ -220,11 +220,11 @@ local function enterAlchemy()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
-        log("Failed to load alchemyCore module")
-        return hang(5, "Failed to load alchemyCore module")
+        G.log("Failed to load alchemyCore module")
+        return G.hang(5, "Failed to load alchemyCore module")
     end
     alchemyCore.enter()
-    log("FATAL ERROR: Alchemy Core Crashed!")
+    G.log("FATAL ERROR: Alchemy Core Crashed!")
     sleep(1)
     os.shutdown("Dousing Alchemy: Alchemy Core Crashed!")
 end
@@ -250,19 +250,19 @@ if fs.exists("/recipe.lua") then
     if success and type(tbl) == "table" then
         existingRecipe = tbl
     else
-        log("Failed to load existing recipe, defaulting to empty")
+        G.log("Failed to load existing recipe, defaulting to empty")
     end
 end
 
 local currentVersion = existingRecipe.version or "0.0.0"
 if not existingRecipe.version then
-    log("No current recipe version found, defaulting to 0.0.0")
+    G.log("No current recipe version found, defaulting to 0.0.0")
 end
 
 Version = currentVersion -- Set global Version variable
 
 if not http then
-    log("HTTP API is disabled")
+    G.log("HTTP API is disabled")
     return enterAlchemy()
 end
 
@@ -286,20 +286,20 @@ if type(files) ~= "table" then error("Invalid file list") end
 log("Local Version: " .. currentVersion)
 
 local shouldUpdate = currentVersion ~= latestVersion
-if shouldUpdate then log("New Version Detected: " .. tostring(latestVersion)) end
+if shouldUpdate then G.log("New Version Detected: " .. tostring(latestVersion)) end
 
 -- check if the version ends in a lowercase d
 local isDevVersion = latestVersion:sub(-1) == "d"
 
 if isDevVersion then
-    log("Warning: This is a development version")
+    G.log("Warning: This is a development version")
 end
 
 local function pullAlchemyUpdates()
-    log("pulling updates...")
+    G.log("pulling updates...")
     --print("updating...")
     for _, path in ipairs(files) do
-        log("Fetching " .. path)
+        G.log("Fetching " .. path)
         local r = http.get(repo .. path)
         if r then
             local dir = fs.getDir(path)
@@ -309,7 +309,7 @@ local function pullAlchemyUpdates()
             fh.close()
             r.close()
         else
-            log("Failed: " .. path)
+            G.log("Failed: " .. path)
         end
     end
 end

@@ -39,7 +39,7 @@ local hangingToTop = false
 
 G.fn.log = false
 
-function hang(code, optionalErrText)
+function G.hang(code, optionalErrText)
     if not G.DevMode then
         if log then
             log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
@@ -84,7 +84,7 @@ end
 -- Load and run the main initialization script in our own globals
 local chunk, loadErr = loadfile(G.OsDirectory .. "/beginTheAlchemy.lua")
 if not chunk then
-    hang(1, "Startup Error loading beginTheAlchemy.lua: " .. tostring(loadErr))
+    G.hang(1, "Startup Error loading beginTheAlchemy.lua: " .. tostring(loadErr))
 end
 
 -- remove any file from the root that is present in the OsDirectory
@@ -108,5 +108,5 @@ end)
 
 if not success then
     local msg = (type(runErr) == "string") and runErr or tostring(runErr)
-    hang(2, "Startup Error: " .. msg)
+    G.hang(2, "Startup Error: " .. msg)
 end
