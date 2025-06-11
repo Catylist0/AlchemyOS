@@ -158,7 +158,6 @@ if DevMode then
         term.redirect(Monitors[1])
         consoleWidth, consoleHeight = term.getSize(Monitors[1])
     end
-    sleep(1)
     term.clear()
     term.setCursorPos(1, (consoleHeight / 2) - 6)
     local barEq = string.rep("=", consoleWidth)
@@ -169,11 +168,7 @@ if DevMode then
     if #Monitors > 0 then
         term.redirect(term.native())
         log("Redirected back to terminal.")
-        term.setCursorPos(1, 1)
     end
-    sleep(1)
-    term.clear()
-    term.setCursorPos(1, 1)
 else
     log(title)
 end
