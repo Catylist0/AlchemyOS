@@ -196,9 +196,38 @@ local function logAllGlobals()
     end
 end
 
+local function cullSystemCatalyst()
+    local recognizedCatalystFiles = {}
+    for _, file in ipairs(G.Recipe.fileIdentities or {}) do
+        local filename = string.match(file, "([^/]+)$")
+        if filename then
+            recognizedCatalystFiles[filename] = true
+        end
+    end
+    local filesInCatalyst = fs.list("SystemCatalyst")
+    for _, file in ipairs(filesInCatalyst) do
+        if not recognizedCatalystFiles[file] then
+            if G.Recipe.localOnlyFiles[file] then
+                G.fn.log("Skipping local-only file: " .. file)
+                goto continue
+            end
+            local fullPath = fs.combine("SystemCatalyst", file)
+            if fs.isDir(fullPath) then
+                fs.delete(fullPath) -- delete directory and contents
+                G.fn.log("Deleted unrecognized directory: " .. fullPath)
+            else
+                fs.delete(fullPath) -- delete file
+                G.fn.log("Deleted unrecognized file: " .. fullPath)
+            end
+            ::continue::
+        end
+    end
+end
+
 local function enterAlchemy()
     logAllGlobals()
     clearLogFolder()
+    cullSystemCatalyst()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
     if type(alchemyCore) ~= "table" or not alchemyCore.enter then
         G.fn.log("Failed to load alchemyCore module")
@@ -241,6 +270,7 @@ if not existingRecipe.version then
 end
 
 G.Version = currentVersion -- Set global Version variable
+G.Recipe = existingRecipe -- Store the existing recipe globally
 
 if not http then
     G.fn.log("HTTP API is disabled")
@@ -258,6 +288,8 @@ fs.delete(tmpFile) -- always clean up
 if not ok then
     error("Failed to parse " .. tmpFile)
 end
+
+G.Recipe = launchRecipe -- New recipe is now the global recipe
 
 local files         = launchRecipe.fileIdentities or error("No file identities found")
 local latestVersion = launchRecipe.version or error("No version found")

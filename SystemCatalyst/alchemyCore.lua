@@ -97,7 +97,7 @@ function aci.enter()
     G.printLogs()
     sleep(0.5)
     -- open the systemfile lastWillAndTestament.lua
-    local lastWillPath = "SystemFiles/lastWillAndTestament.lua"
+    local lastWillPath = "SystemFiles/lastWillAndTestament.txt"
     if fs.exists(lastWillPath) then
         local lastWillFile = fs.open(lastWillPath, "r")
         local lastWillContent = lastWillFile.readAll()
