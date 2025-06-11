@@ -12,12 +12,12 @@ Subsidiary of Catylist Electrochemical
 
 All rights reserved.
 ]]
-
-_G.TitleSplashBare = title
+local G = require("SystemCatalyst.globals")
+G.TitleSplashBare = title
 
 local consoleWidth, consoleHeight = term.getSize()
 
-if DevMode == nil then
+if G.DevMode == nil then
     hang(3, "SystemVar 'DevMode' is not set or accessible.")
 end
 
@@ -34,7 +34,7 @@ local function randomHash()
     return string.format("%08x", math.random(0, 0xFFFFFFFF))
 end
 
-_G.SessionID = randomHash()
+G.SessionID = randomHash()
 
 local endOfBracket = tostring("["..SessionID.."]==")
 
@@ -43,7 +43,7 @@ function log(msg)
     local f = fs.open(logFile, "a")
     if f then
         f.writeLine(textutils.formatTime(os.time(), true) .. " - " .. msg)
-        if DevMode then print(msg) end
+        if G.DevMode then print(msg) end
         f.close()
     else
         hang(4, "Failed to open log file: " .. logFile)
@@ -151,7 +151,7 @@ end
 
 startSession()
 
-if DevMode then
+if G.DevMode then
     log("Detected Monitors: " .. #Monitors)
     if #Monitors > 0 then
         log("Redirecting to monitor: " .. tostring(Monitors[1]))
