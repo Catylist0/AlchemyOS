@@ -13,6 +13,8 @@ Subsidiary of Catylist Electrochemical
 All rights reserved.
 ]]
 
+_G.TitleSplashBare = title
+
 local consoleWidth, consoleHeight = term.getSize()
 
 if DevMode == nil then

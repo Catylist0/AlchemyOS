@@ -12,7 +12,7 @@ local function printReleaseSplash()
         local barEq = string.rep("=", consoleWidth)
         local barEqTop = tostring(string.rep("=", consoleWidth - #endOfBracket) .. endOfBracket)
         print(barEqTop)
-        log(title)
+        log(TitleSplashBare)
         print(barEq)
     end
 
