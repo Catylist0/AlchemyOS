@@ -115,7 +115,7 @@ local function startSession()
     end
 end
 
-function printLogs()
+function G.printLogs()
     local logFile = "logs/" .. G.SessionID .. ".log"
     if fs.exists(logFile) then
         local f = fs.open(logFile, "r")

@@ -27,14 +27,18 @@ local function printReleaseSplash()
         term.redirect(monitor)
         splash()
     end
+    term.redirect(term.native())
 end
 
 function aci.enter()
     G.fn.log("Entering Alchemy Core...")
     G.fn.log("Alchemy " .. tostring(G.Version))
     printReleaseSplash()
-    sleep(3)
-    os.shutdown()
+    sleep(1)
+    term.redirect(term.native())
+    term.clear()
+    term.setCursorPos(1, 1)
+    G.printLogs()
 end
 
 return aci
