@@ -102,7 +102,7 @@ function aci.enter()
         local lastWillFile = fs.open(lastWillPath, "r")
         local lastWillContent = lastWillFile.readAll()
         lastWillFile.close()
-        printMultiPage(lastWillContent)
+        pcall(printMultiPage(lastWillContent))
     else
         G.fn.log("No last will and testament found.")
     end
