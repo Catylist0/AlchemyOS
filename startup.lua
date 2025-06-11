@@ -23,7 +23,7 @@ function hang(code, optionalErrText)
         if log then
             log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
         end
-        os.exit()
+        os.shutdown()
     end
     if not optionalErrText then
         optionalErrText = "generic"
