@@ -69,7 +69,7 @@ local function wrap(text, width)
   return lines
 end
 
-function printMultiPage(text)
+local function printMultiPage(text)
   local printer = peripheral.find("printer") or error("No printer attached")
   printer.newPage()
   local w, h = printer.getPageSize()
