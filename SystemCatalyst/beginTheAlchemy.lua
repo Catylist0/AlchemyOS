@@ -189,6 +189,7 @@ local function logAllGlobals()
     for k, v in pairs(G) do
         formatGlobalPrint(k, v)
     end
+    G.fn.log("global functions:")
     for k, v in pairs(G.fn) do
         formatGlobalPrint(k, v)
     end
