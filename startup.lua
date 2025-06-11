@@ -35,10 +35,16 @@ function hang(code, optionalErrText)
         else
             i = 1
         end
-        if ((i > #s) or hangingToTop) and DevMode and not hangingToTop then
-            print("Version: " .. tostring(Version))
-            hangingToTop = true
-            error("Dousing Alchemy: " .. tostring(optionalErrText))
+        if i > #s then
+            if DevMode and not hangingToTop then
+                print("Version: " .. tostring(Version))
+                hangingToTop = true
+                error("Dousing Alchemy: " .. tostring(optionalErrText))
+            elseif not DevMode then
+                term.clear()
+                term.setCursorPos(1, 1)
+                os.reboot("Dousing Alchemy.. ")
+            end
         end
     end
 end

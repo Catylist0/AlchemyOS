@@ -156,7 +156,7 @@ if DevMode then
     end
     sleep(1)
     term.clear()
-    term.setCursorPos(1, (consoleHeight/2) - 6)
+    term.setCursorPos(1, (consoleHeight / 2) - 6)
     local barEq = string.rep("=", consoleWidth)
     print(barEq)
     log(title)
@@ -176,8 +176,8 @@ log("Beginning Alchemy...")
 
 local function enterAlchemy()
     clearLogFolder()
-    sleep(3)
     print("Success")
+    sleep(3)
     hang(0, "ending")
 end
 
