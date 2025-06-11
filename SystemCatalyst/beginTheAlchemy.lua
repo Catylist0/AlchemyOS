@@ -32,7 +32,7 @@ local function randomHash()
     return string.format("%08x", math.random(0, 0xFFFFFFFF))
 end
 
-SessionID = randomHash()
+_G.SessionID = randomHash()
 
 local endOfBracket = tostring("["..SessionID.."]==")
 
