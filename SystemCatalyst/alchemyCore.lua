@@ -34,7 +34,8 @@ function G.fn.printMultiPage(text)
   local p = peripheral.find("printer")
   if not p then G.fn.log("printMultiPage: No printer attached") return false end
   if not pcall(p.newPage, p) then G.fn.log("printMultiPage: newPage failed") return false end
-
+  if not p or not p.getPageSize() then G.fn.log("printMultiPage: No page size") return false end
+  
   local w, h = p.getPageSize()
   if type(w) ~= "number" or type(h) ~= "number" then
     G.fn.log("printMultiPage: invalid page size")
