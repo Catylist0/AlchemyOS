@@ -23,6 +23,7 @@ local function printReleaseSplash()
 end
 
 function aci.enter()
+    print("PEOPLE OF EARTH REJOICE!!!!")
     log("Entering Alchemy Core...")
     log("Alchemy ".. Version)
     printReleaseSplash()
