@@ -218,7 +218,7 @@ end
 
 local function enterAlchemy()
     logAllGlobalVars()
-    logAllGlobalTables()
+    --logAllGlobalTables()
     --logAllGlobalFunctions()
     clearLogFolder()
     local alchemyCore = require "SystemCatalyst.alchemyCore"
