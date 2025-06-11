@@ -5,6 +5,7 @@ local aci = alchemyCore
 local function printReleaseSplash()
     log("Detected Monitors: " .. #Monitors)
     local endOfBracket = tostring("["..SessionID.."]==")
+    local endOfLowerBracket = tostring("["..Version.."]====")
     local splash = function()
         local consoleWidth, consoleHeight = term.getSize()
         term.clear()
