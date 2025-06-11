@@ -298,7 +298,6 @@ end
 local function pullAlchemyUpdates()
     log("pulling updates...")
     --print("updating...")
-    DevMode = true
     for _, path in ipairs(files) do
         log("Fetching " .. path)
         local r = http.get(repo .. path)
