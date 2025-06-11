@@ -148,7 +148,7 @@ end
 startSession()
 
 if DevMode then
-    log(#Monitors)
+    log("Detected Monitors: " .. #Monitors)
     if #Monitors > 0 then
         log("Redirecting to monitor: " .. tostring(Monitors[1]))
         term.redirect(Monitors[1])
