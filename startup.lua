@@ -23,7 +23,7 @@ G.OsDirectory = "SystemCatalyst"
 
 G.Monitors = { peripheral.find("monitor") }
 
-G.DevMode = false -- Set to true to enable developer mode features
+G.DevMode = true -- Set to true to enable developer mode features
 
 G.fn = {}
 
