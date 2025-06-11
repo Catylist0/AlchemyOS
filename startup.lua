@@ -107,5 +107,5 @@ end)
 
 if not success then
     local msg = (type(runErr) == "string") and runErr or tostring(runErr)
-    G.hang(2, "Startup Error: " .. msg)
+    G.hang(2, "Runtime Error: " .. msg)
 end
