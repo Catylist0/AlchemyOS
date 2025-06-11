@@ -1,29 +1,33 @@
 term.clear()
 term.setCursorPos(1, 1)
 term.setCursorBlink(false)
+local G = require("SystemCatalyst.globals")
 
 print("Welcome to AlchemyOS")
-
 sleep(1)
 
-Monitors = { peripheral.find("monitor") }
+G.OsDirectory = "SystemCatalyst"
 
-DevMode = false -- Set to true to enable developer mode features
+G.Monitors = { peripheral.find("monitor") }
 
-if DevMode then
+G.DevMode = false -- Set to true to enable developer mode features
+
+G.fn = {}
+
+if G.DevMode then
     print("Starting AlchemyOS Dev Environment...")
 end
 
-Version = "not loaded yet..."
+G.Version = "not loaded yet..."
 
 os.pullEvent = os.pullEventRaw
 
 local hangingToTop = false
 
-log = false
+G.fn.log = false
 
 function hang(code, optionalErrText)
-    if not DevMode then
+    if not G.DevMode then
         if log then
             log("Dousing Alchemy: Program hanging at code " .. tostring(code) .. " - " .. tostring(optionalErrText))
         end
@@ -50,11 +54,11 @@ function hang(code, optionalErrText)
             i = 1
         end
         if i > #s then
-            if DevMode and not hangingToTop then
+            if G.DevMode and not hangingToTop then
                 print("Version: " .. tostring(Version))
                 hangingToTop = true
                 error("Dousing Alchemy: " .. tostring(optionalErrText))
-            elseif not DevMode then
+            elseif not G.DevMode then
                 term.clear()
                 term.setCursorPos(1, 1)
                 os.reboot("Dousing Alchemy.. ")
@@ -63,10 +67,8 @@ function hang(code, optionalErrText)
     end
 end
 
-local OsDirectory = "SystemCatalyst"
-
 -- Load and run the main initialization script in our own globals
-local chunk, loadErr = loadfile(OsDirectory .. "/beginTheAlchemy.lua")
+local chunk, loadErr = loadfile(G.OsDirectory .. "/beginTheAlchemy.lua")
 if not chunk then
     hang(1, "Startup Error loading beginTheAlchemy.lua: "..tostring(loadErr))
 end
@@ -75,24 +77,22 @@ end
 local function purgeFalseCatalystFiles()
     local files = fs.list("/")
     for _, file in ipairs(files) do
-        if fs.exists(fs.combine(OsDirectory, file)) then
+        if fs.exists(fs.combine(G.OsDirectory, file)) then
             fs.delete(file)
-            if DevMode then print("Warning Purged false catalyst file: " .. file) end
+            if G.DevMode then print("Warning Purged false catalyst file: " .. file) end
         end
     end
 end
 print("Loading AlchemyOS...")
-sleep(0.5) -- give the system a moment to settle
+sleep(0.5)
 
 purgeFalseCatalystFiles()
 
--- Lua 5.1: copy our environment (_G) into the chunk
-setfenv(chunk, getfenv())
+local success, runErr = pcall(function()
+  require(G.OsDirectory .. ".beginTheAlchemy")
+end)
 
--- run it
-local ok, runErr = pcall(chunk)
-if not ok then
-    local msg = (type(runErr) == "string") and runErr or tostring(runErr)
-    hang(2, "Startup Error: "..msg)
+if not success then
+  local msg = (type(runErr) == "string") and runErr or tostring(runErr)
+  hang(2, "Startup Error: " .. msg)
 end
-
