@@ -1,0 +1,37 @@
+local lastWill = [[
+
+The Following has been written in sound mind
+and body, and is to be executed in the event
+of my death.
+
+To Catylist
+I hereby bequeath, in the event of my death:
+a controlling 70% stake in my Pharmaceutical
+plant, as well as a 70% stake in my 
+Semiconductor plant. These will be incorporated
+together. The resulting Catylist Electrochemical
+company will be 70% owned by Catylist, and 20%
+owned by Voicemail, with the remaining 10%
+owned by the government.
+I also bequeath to you a 20% stake in Empire 
+Group and Southwestern Petrolchemicals.
+
+To Voicemail
+I hereby bequeath, in the event of my death:
+a controlling 80% stake in my Southwestern 
+Petrolchemicals. An 80% stake in Empire group. 
+
+For the companies: 
+
+Voicemail MFG - my machine part factory, is to
+be split between Catylist, Voicemail, and the
+government, at a ratio of 40% to Catylist, 49% to Voicemail, and 11% to the government.
+North Western Farming Ltd is to be split between Catylist, Voicemail, and the government, 
+at a ratio of 30% to Catylist, 30% to Voicemail, and 40% to the government.
+Rosthorn Building is to be given entirely to Catylist and Voicemail 50/50.
+Power Plant Operations Corporation is to be given entirely to Catylist.
+OuterCity Concrete & Brickworks is to be split evenly between Catylist, Voicemail, and the government.
+Rosthorn Broadcasting is to be given entirely to Voicemail.
+]]
+
+return lastWill
