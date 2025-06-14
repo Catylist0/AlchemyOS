@@ -12,6 +12,6 @@ ingredients.localOnlyFiles = {
     ["SystemCatalyst/globals.lua"] = true
 }
 
-ingredients.version = "0.1.12d"
+ingredients.version = "0.1.11d"
 
 return ingredients
