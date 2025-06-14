@@ -1,7 +1,6 @@
 term.clear()
 term.setCursorPos(1, 1)
 term.setCursorBlink(false)
-print("Loading AlchemyOS from NEWWWW...")
 
 local G
 local ok, err = pcall(function()
